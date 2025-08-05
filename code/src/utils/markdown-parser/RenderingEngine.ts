@@ -7,6 +7,14 @@ export class RenderingEngine implements IRenderingEngine {
 
   }
   render(abstractSyntaxTree: ASTNode): string {
-    return ""
+    if (!abstractSyntaxTree.children) return "";
+    return abstractSyntaxTree.children.map(child => {
+      for (const rule of this.renderingRules) {
+        if (rule.match(child)) {
+          return rule.render(child);
+        }
+      }
+      return "";
+    }).join("\n");
   }
 }

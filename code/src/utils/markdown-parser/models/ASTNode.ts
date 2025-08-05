@@ -3,5 +3,6 @@ export interface ASTNode {
   children?: ASTNode[];
   value?: string;
   level?: number;
+  href?: string;
   [key: string]: any;
 }
