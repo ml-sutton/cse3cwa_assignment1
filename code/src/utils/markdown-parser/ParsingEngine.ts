@@ -6,8 +6,8 @@ import { Tokenizer } from "./Tokenizer";
 
 export class ParsingEngine implements IParsingEngine {
   constructor(
-    public parser: Parser,
     public tokenizer: Tokenizer,
+    public parser: Parser,
     public renderer: RenderingEngine,
     public sanitizer: HTMLSanitizer
   ) {

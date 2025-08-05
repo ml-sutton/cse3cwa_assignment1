@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
-import { RenderingEngine } from "../RenderingEngine";
+import { ParsingEngineFactory } from "../ParsingEngineFactory";
+import { ParsingEngine } from "../ParsingEngine";
 
-export const MarkdownContext = React.createContext(null);
+export const MarkdownContext = React.createContext<ParsingEngine | null>(null);
 interface MarkdownProviderProps {
   children: React.ReactNode;
 }
 export const MarkdownProvider: React.FC<MarkdownProviderProps> = ({ children }) => {
-  const renderingEngine: RenderingEngine()
+  const parsingEngine = ParsingEngineFactory.build();
   return (
-    <MarkdownContext.Provider value={null}>
+    <MarkdownContext.Provider value={parsingEngine}>
       {children}
     </MarkdownContext.Provider>
   )
