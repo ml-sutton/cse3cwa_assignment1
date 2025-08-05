@@ -7,6 +7,18 @@ export class Tokenizer implements ITokenizer {
 
   }
   tokenize(untokenized_input: string): Token[] {
-    return [];
+    const lines = untokenized_input.split(/\r?\n/);
+    const tokens: Token[] = [];
+
+    for (const line of lines) {
+      for (const rule of this.tokenRules) {
+        if (rule.match(line)) {
+          tokens.push(rule.createToken(line));
+          break;
+        }
+      }
+    }
+
+    return tokens;
   }
 }

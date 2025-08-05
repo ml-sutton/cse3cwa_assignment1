@@ -1,4 +1,6 @@
+import { ASTNode } from "./ASTNode";
+
 export interface RenderingRule {
-  match(node: Node): boolean;
-  render(node: Node): string;
+  match(node: ASTNode): boolean;
+  render(node: ASTNode): string;
 }

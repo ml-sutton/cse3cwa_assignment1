@@ -18,7 +18,6 @@ export class ParsingEngine implements IParsingEngine {
     const abstractSyntaxTree = this.parser.parse(tokens);
     const unsanitizedHTML = this.renderer.render(abstractSyntaxTree);
     const sanitizedHTML = this.sanitizer.sanitize(unsanitizedHTML)
-
     return sanitizedHTML;
   }
 }

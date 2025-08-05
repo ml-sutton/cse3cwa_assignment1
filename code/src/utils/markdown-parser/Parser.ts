@@ -5,12 +5,22 @@ import { Token } from "./models/token";
 
 export class Parser implements IParser {
   constructor(
-    public rules: ParsingRule[] = []
+    public parsingRules: ParsingRule[] = []
   ) {
 
   }
   parse(tokens: Token[]) {
-    return { type: "root", children: [] }
+    const children: ASTNode[] = [];
+    for (const token of tokens) {
+      for (const rule of this.parsingRules) {
+        if (rule.match([token])) {
+          children.push(rule.createNode([token]));
+          break;
+        }
+      }
+    }
+    return { type: "root", children };
   }
-
 }
+
+
