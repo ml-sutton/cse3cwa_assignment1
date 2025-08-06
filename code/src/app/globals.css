@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.bg-latrobe-light {
+  background-color: #e2231b;
+}
+
+.bg-latrobe-dark {
+  background-color: #242424;
+}
+
+.fg-latrobe-light {
+  color: #fefefe;
+}
+
+.fg-latrobe-dark {
+  color: #fefefe;
+}
