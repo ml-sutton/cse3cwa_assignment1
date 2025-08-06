@@ -8,11 +8,12 @@ interface HamburgerButtonPropTypes {
 }
 
 export const HamburgerButton: React.FC<HamburgerButtonPropTypes> = ({ isOpen, changeState }) => {
+
   return (
-    <div className="flex justify-center items-center">
-      {!isOpen ? (<>
-        hamburger open</>) : (<>
-          hamburger</>)}
+    <div className="flex justify-center items-center w-full h-full" onClick={(_) => { changeState((prev) => prev = !isOpen) }}>
+      <div className="">
+        hamburber
+      </div>
     </div>
   )
 }
