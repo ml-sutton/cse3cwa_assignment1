@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #ededed;
   --foreground: #171717;
 }
 
@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #444444;
     --foreground: #ededed;
   }
 }
@@ -27,11 +27,60 @@ body {
 
 .bg-latrobe-light {
   background-color: #e2231b;
+
 }
 
-.bg-latrobe-dark {
+.bg-latrobe-dark-header {
   background-color: #242424;
 }
+
+.hamburger-label {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 36px;
+  height: 30px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hamburger-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+.hamburger-bar {
+  display: block;
+  height: 4px;
+  background-color: var(--foreground);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* No absolute/relative positioning here */
+}
+
+/* Spacing bars evenly */
+.bar-top,
+.bar-mid,
+.bar-bottom {
+  width: 100%;
+}
+
+/* Checkbox hidden, so let's target based on checked state */
+input[type="checkbox"]:checked+label .bar-top {
+  transform: translateY(12.5px) rotate(45deg);
+}
+
+input[type="checkbox"]:checked+label .bar-mid {
+  opacity: 0;
+}
+
+input[type="checkbox"]:checked+label .bar-bottom {
+  transform: translateY(-12.5px) rotate(-45deg);
+}
+
 
 .fg-latrobe-light {
   color: #fefefe;
@@ -39,4 +88,13 @@ body {
 
 .fg-latrobe-dark {
   color: #fefefe;
+}
+
+
+.bg-latrobe-dark-footer {
+  background-color: #242424;
+}
+
+.bg-latrobe-light-footer {
+  background-color: #e2231b;
 }

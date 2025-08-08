@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 
 interface HamburgerButtonPropTypes {
   isOpen: boolean,
@@ -8,12 +8,21 @@ interface HamburgerButtonPropTypes {
 }
 
 export const HamburgerButton: React.FC<HamburgerButtonPropTypes> = ({ isOpen, changeState }) => {
-
+  const handleHamburgerOpen = (event: ChangeEvent<HTMLInputElement>) => {
+    changeState((prev) => prev = event.target.checked)
+  }
   return (
-    <div className="flex justify-center items-center w-full h-full" onClick={(_) => { changeState((prev) => prev = !isOpen) }}>
-      <div className="">
-        hamburber
-      </div>
+
+
+    <div className=" ">
+      <input type="checkbox" name="hamburgerMenu" id="hamburgerMenu" className="hidden" checked={isOpen} onChange={handleHamburgerOpen} />
+      <label htmlFor="hamburgerMenu" className="hamburger-label">
+        <div className="hamburger-box">
+          <span className="hamburger-bar bar-top"></span>
+          <span className="hamburger-bar bar-mid"></span>
+          <span className="hamburger-bar bar-bottom"></span>
+        </div>
+      </label>
     </div>
   )
 }

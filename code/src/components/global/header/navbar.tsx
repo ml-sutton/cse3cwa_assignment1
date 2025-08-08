@@ -9,10 +9,11 @@ export const Navbar: React.FC = () => {
 
   return (
     <div className="">
-      <HamburgerButton isOpen={hamburgerState} changeState={setHamburgerState} />
+      <div className="flex justify-center items-center w-full h-full">
+        <HamburgerButton isOpen={hamburgerState} changeState={setHamburgerState} />
+      </div>
       <div className="absolute right-0">
         <HamburgerMenu isOpen={hamburgerState} />
-
       </div>
     </div>
   )
