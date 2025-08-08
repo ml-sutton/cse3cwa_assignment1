@@ -1,20 +1,59 @@
 "use client"
-import { UseTheme } from "@/hooks/useTheme";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 export type Theme = "dark" | "light" | null
-export const ThemeContext = React.createContext<Theme>(null);
+
+export interface ThemeContextType {
+  theme: Theme,
+  setTheme: React.Dispatch<React.SetStateAction<Theme>>
+}
+export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 interface ThemeProviderPropTypes {
   children: React.ReactNode
 }
 export const ThemeProvider: React.FC<ThemeProviderPropTypes> = ({ children }) => {
-  // if theme not in local storage then disable ssr and detect them :3c 
-  const [currentTheme, setTheme] = UseTheme();
-  
-  // logic to detect theme
+  const loadLocalTheme = (): Theme | null => {
+    if (typeof window === 'undefined') return null;
+
+    const currentTheme = window.localStorage.getItem("currentTheme");
+    if (currentTheme == "dark" || currentTheme == "light") return currentTheme
+    return null;
+  }
+  const loadSystemTheme = (): Theme => {
+    if (typeof window === 'undefined') return null
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  const eventListenerLambda = (event: MediaQueryListEvent) => {
+    if (typeof window === "undefined") return
+    if (!loadLocalTheme) {
+      window.localStorage.setItem("currentTheme", event.matches ? "dark" : "light");
+    }
+  }
+  const [theme, setTheme] = useState<Theme>(() => {
+    const localTheme = loadLocalTheme();
+    const systemTheme = loadSystemTheme();
+    const defaultTheme = "dark";
+    if (loadLocalTheme != null) return loadLocalTheme()
+    if (loadSystemTheme != null) return loadSystemTheme()
+    return "dark";
+  });
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", eventListenerLambda);
+    return () => mediaQuery.removeEventListener("change", eventListenerLambda);
+  }, [])
+  useEffect(() => {
+    // Save theme to localStorage when it changes
+    if (theme === "dark" || theme === "light") {
+      window.localStorage.setItem("currentTheme", theme);
+    }
+  }, [theme]);
+
+
 
   // componennt
   return (
-    <ThemeContext.Provider value={currentTheme as Theme}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   )
