@@ -1,9 +1,7 @@
-import Image from "next/image";
+import { TabsPage } from "@/components/tabs-screen/TabsPage";
 
 export default function Home() {
   return (
-    <div className="">
-      working on it
-    </div>
+    <TabsPage/>
   );
 }

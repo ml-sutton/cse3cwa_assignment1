@@ -8,7 +8,6 @@ export class HTMLSanitizer implements IHTMLSanitizer {
     const sanitizedHTML = unsanitizedHTML.
       replace(/<\s*script[^>]*>[\s\S]*?<\s*\/\s*script\s*>/gi, "")
       .replace(/<\s*style[^>]*>[\s\S]*?<\s*\/\s*style\s*>/gi, "")
-      .replace(/<\/?[^>]+>/g, "")
       .replace(/on\w+\s*=\s*"[^"]*"/gi, "")
       .replace(/on\w+\s*=\s*'[^']*'/gi, "")
       .replace(/on\w+\s*=\s*[^\s>]+/gi, "")
