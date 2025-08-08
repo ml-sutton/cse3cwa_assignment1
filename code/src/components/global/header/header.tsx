@@ -12,6 +12,7 @@ export const Header: React.FC = () => {
   return (
     <div className={`w-screen flex justify-end px-8 py-4 ${themedStyles}`}>
       <TitleCard />
+      {/* theme switcher */}
       <Navbar />
 
     </div>
