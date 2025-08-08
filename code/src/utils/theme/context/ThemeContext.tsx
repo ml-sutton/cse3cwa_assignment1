@@ -33,14 +33,15 @@ export const ThemeProvider: React.FC<ThemeProviderPropTypes> = ({ children }) =>
     const localTheme = loadLocalTheme();
     const systemTheme = loadSystemTheme();
     const defaultTheme = "dark";
-    if (loadLocalTheme != null) return loadLocalTheme()
-    if (loadSystemTheme != null) return loadSystemTheme()
-    return "dark";
+    if (loadLocalTheme != null) return localTheme
+    if (loadSystemTheme != null) return systemTheme
+    return defaultTheme;
   });
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     mediaQuery.addEventListener("change", eventListenerLambda);
     return () => mediaQuery.removeEventListener("change", eventListenerLambda);
+    // eslint-disable-next-line
   }, [])
   useEffect(() => {
     // Save theme to localStorage when it changes

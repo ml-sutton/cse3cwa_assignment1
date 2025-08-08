@@ -4,5 +4,6 @@ export interface ASTNode {
   value?: string;
   level?: number;
   href?: string;
-  [key: string]: any;
+  // eslint-disable-next-line
+  [key: string]: any; 
 }

@@ -1,6 +1,4 @@
 "use client";
-import { useState } from "react";
-
 export const TabsNav: React.FC = () => {
   return (
     <div className="">

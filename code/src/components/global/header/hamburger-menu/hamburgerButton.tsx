@@ -1,6 +1,6 @@
 "use client"
 
-import React, { ChangeEvent, useState } from "react"
+import React, { ChangeEvent } from "react"
 
 interface HamburgerButtonPropTypes {
   isOpen: boolean,
@@ -9,7 +9,7 @@ interface HamburgerButtonPropTypes {
 
 export const HamburgerButton: React.FC<HamburgerButtonPropTypes> = ({ isOpen, changeState }) => {
   const handleHamburgerOpen = (event: ChangeEvent<HTMLInputElement>) => {
-    changeState((prev) => prev = event.target.checked)
+    changeState(event.target.checked)
   }
   return (
 

@@ -6,13 +6,14 @@ export const ThemeSwitcher: React.FC = () => {
   const theme = useContext(ThemeContext);
   const [isDark, setIsDark] = useState<boolean>(theme?.theme == "dark" ? true : false)
   const SwapTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     if (theme?.theme == "dark") {
       theme?.setTheme("light")
-      setIsDark((prev) => prev = false)
+      setIsDark(false)
     }
     else {
       theme?.setTheme("dark")
-      setIsDark((prev) => prev = true)
+      setIsDark(true)
     }
   }
   const themedStyles = theme?.theme == "dark" ? "bg-latrobe-dark-header fg-latrobe-dark border-[#e2231b]" : "bg-latrobe-light-header fg-latrobe-light border-b-2 border-[#242424]"
