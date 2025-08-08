@@ -3,7 +3,7 @@ import { PageLinks, PageLink } from "@/const/pagelinks"
 import { HamburgerLink } from "./hamburgerLink"
 import { ThemeContext } from "@/utils/theme/context/ThemeContext";
 import { useContext } from "react";
-import { ThemeSwitcher } from "../../themeswitcher/themeSwitcher";
+import { ThemeSwitcher } from "../../theme-switcher/themeSwitcher";
 
 interface HamburgerMenuPropTypes {
   isOpen: boolean

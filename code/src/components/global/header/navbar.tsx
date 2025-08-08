@@ -1,7 +1,7 @@
 "use client"
-import { HamburgerButton } from "./hamburgerMenu/hamburgerButton";
+import { HamburgerButton } from "./hamburger-menu/hamburgerButton";
 import { useState } from "react";
-import { HamburgerMenu } from "./hamburgerMenu/hamburgerMenu";
+import { HamburgerMenu } from "./hamburger-menu/hamburgerMenu";
 
 
 export const Navbar: React.FC = () => {
