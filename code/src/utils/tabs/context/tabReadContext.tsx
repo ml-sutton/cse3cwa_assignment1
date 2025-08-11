@@ -1,32 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Tab } from "../models/tab";
-interface TabsContextProviderPropTypes {
+interface TabsReadContextProviderPropTypes {
   children: React.ReactNode
 }
-interface TabsContextExportType {
+interface TabsReadContextExportType {
   tabs: Tab[];
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>;
   loadedTab: number | null;
   setLoadedTab: React.Dispatch<React.SetStateAction<number | null>>
 }
-export const TabsContext = React.createContext<TabsContextExportType | null>(null);
-export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ children }) => {
+export const TabsReadContext = React.createContext<TabsReadContextExportType | null>(null);
+export const TabsReadContextProvider: React.FC<TabsReadContextProviderPropTypes> = ({ children }) => {
   const [tabs, setTabs] = useState<Tab[]>([])
   const [loadedTab, setLoadedTab] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    tabs.forEach((tab) => {
-      const tabID = `tab:${tab.tabId.toString()}`
-      if (window.localStorage.getItem(tabID)) {
-        window.localStorage.removeItem(tabID)
-      }
-      window.localStorage.setItem(tabID, JSON.stringify(tab))
-    })
-    // load selected via cookie
 
-
-  }, [tabs])
   useEffect(() => {
     if (tabs.length === 0) return;
     if (loadedTab === null) return;
@@ -75,8 +63,8 @@ export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ ch
 
   }, [])
   return (
-    <TabsContext.Provider value={{ tabs, setTabs, loadedTab, setLoadedTab }}>
+    <TabsReadContext.Provider value={{ tabs, setTabs, loadedTab, setLoadedTab }}>
       {children}
-    </TabsContext.Provider>
+    </TabsReadContext.Provider>
   )
 } 

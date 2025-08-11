@@ -3,14 +3,14 @@
 import { useContext } from "react";
 import { TabsNavTitleBar } from "./tabsNavTitleBar";
 import { ThemeContext } from "@/utils/theme/context/themeContext";
-import { TabsContext } from "@/utils/tabs/context/tabContext";
+import { TabsReadContext } from "@/utils/tabs/context/tabReadContext";
 import { TabsNavSubHeader } from "./tabsNavSubheader";
 import { TabNavLink } from "./tabNavLinks";
 import { Tab } from "@/utils/tabs/models/tab";
 
 export const TabsNav: React.FC = () => {
   const themeContext = useContext(ThemeContext);
-  const tabContext = useContext(TabsContext);
+  const tabContext = useContext(TabsReadContext);
   const selectedTabObject = tabContext?.tabs.find(tab => tab.tabId === tabContext?.loadedTab);
   const selectedTab = selectedTabObject?.tabName ?? "tab not found"
 
@@ -20,7 +20,7 @@ export const TabsNav: React.FC = () => {
       <TabsNavTitleBar tabName={selectedTab ?? ""} />
       <TabsNavSubHeader />
       <nav>
-        {TabsContext?.length == 0 ? (
+        {TabsReadContext?.length == 0 ? (
           <div className="">
             You have not created any tabs yet!
           </div>

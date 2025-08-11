@@ -1,9 +1,9 @@
-import { TabsContext } from "@/utils/tabs/context/tabContext"
+import { TabsReadContext } from "@/utils/tabs/context/tabReadContext"
 import { Tab } from "@/utils/tabs/models/tab";
 import { useContext } from "react"
 
 export const TabsNavSubHeader: React.FC = () => {
-  const tabsContext = useContext(TabsContext);
+  const tabsContext = useContext(TabsReadContext);
   const tabCount = tabsContext?.tabs.length ?? 0;
   const createTab = () => {
     const tabId = tabCount + 1
