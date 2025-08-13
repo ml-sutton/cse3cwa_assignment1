@@ -1,5 +1,5 @@
 "use client"
-import { ThemeContext } from "../../../utils/theme/context/themeContext";
+import { ThemeContext } from "../../../../utils/theme/context/themeContext";
 import { useContext, useState } from "react";
 
 export const ThemeSwitcher: React.FC = () => {
@@ -16,8 +16,7 @@ export const ThemeSwitcher: React.FC = () => {
     }
 
   }
-  const themedStyles = theme?.theme == "dark" ? "bg-latrobe-dark-header fg-latrobe-dark border-[#e2231b]" : "bg-latrobe-light-header fg-latrobe-light border-b-2 border-[#242424]"
-  return (<div className={`flex justify-center py-4 px-4 w-full text-center border-l-2 border-b-2 ${themedStyles}`}>
+  return (<div className={`flex justify-center text-center`}>
 
     <input
       type="checkbox"

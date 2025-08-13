@@ -134,7 +134,7 @@ input[type="checkbox"]:checked+label .bar-bottom {
   border-radius: 2em;
   display: block;
   height: 1.5em;
-  left: .15em;
+  left: .25em;
   overflow: hidden;
   position: absolute;
   top: .15em;
