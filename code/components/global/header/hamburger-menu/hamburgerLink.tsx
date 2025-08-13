@@ -1,4 +1,4 @@
-import { ThemeContext } from "@/utils/theme/context/themeContext"
+import { ThemeContext } from "../../../../utils/theme/context/themeContext"
 import Link from "next/link"
 import { useContext } from "react"
 

@@ -1,5 +1,5 @@
 "use client"
-import { ThemeContext } from "@/utils/theme/context/themeContext";
+import { ThemeContext } from "../../../utils/theme/context/themeContext";
 import { useContext, useState } from "react";
 
 export const ThemeSwitcher: React.FC = () => {

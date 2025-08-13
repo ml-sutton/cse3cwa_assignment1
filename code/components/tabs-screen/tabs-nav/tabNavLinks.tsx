@@ -1,4 +1,4 @@
-import { TabsContext } from "@/utils/tabs/context/tabContext"
+import { TabsContext } from "../../../utils/tabs/context/tabContext"
 import { useContext } from "react"
 
 interface TabNavLinksPropTypes {

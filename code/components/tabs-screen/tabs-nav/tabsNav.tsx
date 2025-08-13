@@ -2,11 +2,11 @@
 
 import { useContext } from "react";
 import { TabsNavTitleBar } from "./tabsNavTitleBar";
-import { ThemeContext } from "@/utils/theme/context/themeContext";
-import { TabsContext } from "@/utils/tabs/context/tabContext";
+import { ThemeContext } from "../../../utils/theme/context/themeContext";
+import { TabsContext } from "../../../utils/tabs/context/tabContext";
 import { TabsNavSubHeader } from "./tabsNavSubheader";
 import { TabNavLink } from "./tabNavLinks";
-import { Tab } from "@/utils/tabs/models/tab";
+import { Tab } from "../../../utils/tabs/models/tab";
 
 export const TabsNav: React.FC = () => {
   const themeContext = useContext(ThemeContext);

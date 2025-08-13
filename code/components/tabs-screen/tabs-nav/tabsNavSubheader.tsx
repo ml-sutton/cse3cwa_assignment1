@@ -1,5 +1,5 @@
-import { TabsContext } from "@/utils/tabs/context/tabContext"
-import { Tab } from "@/utils/tabs/models/tab";
+import { TabsContext } from "../../../utils/tabs/context/tabContext"
+import { Tab } from "../../../utils/tabs/models/tab";
 import { useContext } from "react"
 
 export const TabsNavSubHeader: React.FC = () => {

@@ -1,6 +1,6 @@
 "use client"
 
-import { ThemeContext } from "@/utils/theme/context/themeContext"
+import { ThemeContext } from "../../utils/theme/context/themeContext"
 import { useContext } from "react"
 
 export const Footer: React.FC = () => {
