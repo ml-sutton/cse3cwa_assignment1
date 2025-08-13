@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/global/header/header";
 import { Footer } from "@/components/global/footer";
-import { ThemeProvider } from "@/utils/theme/context/themeContext";
+import { ThemeContext, ThemeProvider } from "@/utils/theme/context/themeContext";
+import { useContext } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const themeContext = useContext(ThemeContext);
+
   return (
     <html lang="en">
       <body

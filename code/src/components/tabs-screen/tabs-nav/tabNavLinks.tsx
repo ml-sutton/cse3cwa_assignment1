@@ -1,4 +1,4 @@
-import { TabsReadContext } from "@/utils/tabs/context/tabReadContext"
+import { TabsContext } from "@/utils/tabs/context/tabContext"
 import { useContext } from "react"
 
 interface TabNavLinksPropTypes {
@@ -6,7 +6,7 @@ interface TabNavLinksPropTypes {
   tabID: number
 }
 export const TabNavLink: React.FC<TabNavLinksPropTypes> = ({ tabName, tabID }) => {
-  const tabContext = useContext(TabsReadContext);
+  const tabContext = useContext(TabsContext);
   const handleClick = () => {
     if (tabContext?.loadedTab == tabID) return
     tabContext?.setLoadedTab(tabID);
