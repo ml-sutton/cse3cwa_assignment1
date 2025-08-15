@@ -7,25 +7,31 @@ import { TabsForm } from "../tabs-form/tabsForm";
 import { TabsOutput } from "../tabs-output/tabsOutput";
 import { TabsContext } from "../../../utils/tabs/context/tabContext";
 import { Tab } from "../../../utils/tabs/models/tab";
+import WriteTabsToLocalStorage from "../../../utils/tabs/data-access/WriteTabsToLocalStorage";
 
 
 export const TabsLayout: React.FC = () => {
   const themeContext = useContext(ThemeContext);
   const themedStyles = themeContext?.theme == "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
   const tabContext = useContext(TabsContext);
-  const tabsValue = tabContext?.tabs ? [...tabContext?.tabs] : []
+  const tabsValue = tabContext?.tabs ? [...tabContext.tabs] : []
   const selectedTabvalue = tabContext?.loadedTab ? tabContext.loadedTab : 0
   const [tabs, setTabs] = useState<Tab[]>(tabsValue)
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [selectedTab, setSelectedTab] = useState<number>(selectedTabvalue);
   useEffect(() => {
     setTabs([...tabContext?.tabs as Tab[]])
     setSelectedTab(tabContext?.loadedTab as number)
   }, [tabContext?.tabs, tabContext?.loadedTab])
+  useEffect(() => {
+    WriteTabsToLocalStorage(tabs).then(result => {
+      result ? console.log("tabs saved") : console.warn("error in tab saving, No tabs or window is undefined");
+    }).catch(error => console.error(error));
+  }, [tabs]);
   return (
     <section>
       <div className={`flex px-8 ${themedStyles}`}>
-        <TabsNav />
-        <TabsForm />
+        <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} />
         <TabsOutput />
       </div>
     </section>

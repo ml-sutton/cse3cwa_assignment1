@@ -1,10 +1,14 @@
 import { Tab } from "../../../utils/tabs/models/tab";
-
-export const TabsNavSubHeader: React.FC = () => {
-  // const tabCount = tabsContext?.tabs.length ?? 0;
+interface TabsNavSubHeaderPropTypes {
+  tabs: Tab[]
+  setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
+  selectedTab: number
+}
+export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, setTabs, selectedTab }) => {
+  const tabCount = tabs.length ?? 0;
   const createTab = () => {
-    const tabId = 1;
-    if (tabId + 1 == 16) {
+    const tabId = tabCount + 1;
+    if (tabId == 16) {
       alert("YOU HAVE REACHED THE MAXIUM AMOUNT OF TABS")
       return;
     }
@@ -14,13 +18,17 @@ export const TabsNavSubHeader: React.FC = () => {
       tabBody: "# Edit me!",
       syntaxHighlight: false
     }
-    // const allTabs = tabsContext?.tabs ?? [];
-    // tabsContext?.setTabs([...allTabs, tab]);
+    const allTabs = tabs ?? [];
+    setTabs([...allTabs, tab]);
+    
+  }
+  const deleteTab = () => {
+
   }
   return (
 
     <div className="flex w-full justify-between px-8 border-t-2 border-b-2">
-      <p>{15}/15</p>
+      <p>{tabCount}/15</p>
       <button onClick={() => createTab()}>+</button>
     </div>
   )

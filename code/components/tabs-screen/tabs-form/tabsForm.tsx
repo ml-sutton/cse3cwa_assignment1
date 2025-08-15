@@ -1,29 +1,43 @@
 import useDebounce from "../../../hooks/useDebounce"
 import { TabsContext } from "../../../utils/tabs/context/tabContext"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
+import { Tab } from "../../../utils/tabs/models/tab"
 
-interface TabsFormPropTypes
-{
-  
+interface TabsFormPropTypes {
+  tabs: Tab[]
+  setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
+  selectedTab: number
 }
 
-export const TabsForm: React.FC = () => {
-  const tabContext = useContext(TabsContext)
-  const [tabName, setTabName] = useState("dbTabName")
-  const [tabData, setTabData] = useState<string>("dbTabData");
-  const debouncedTabData = useDebounce(tabData, 500);
-  const debouncedTabName = useDebounce(tabName, 500);
+export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab }) => {
+  const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "Tab not found";
+  const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "body not found"
+  const [tabName, setTabName] = useState<string>(dbTabName);
+  const [tabData, setTabData] = useState<string>(dbTabBody);
+  const debouncedTabData = useDebounce(tabData, 50);
+  const debouncedTabName = useDebounce(tabName, 50);
+  useEffect(() => {
+    if (tabs.length === 0) return
+    setTabName(tabs[selectedTab].tabName)
+    setTabData(tabs[selectedTab].tabBody)
+  }, [selectedTab])
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTabName(event.target.value);
-
+    const tabsCopy = [...tabs];
+    tabsCopy[selectedTab].tabName = debouncedTabName;
+    setTabs(tabsCopy);
   }
   const handleTabData = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTabData(event.target.value)
+    const tabsCopy = [...tabs];
+    tabsCopy[selectedTab].tabBody = debouncedTabData;
+    setTabs(tabsCopy)
   }
   const preventEnter = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   }
-  return tabContext?.tabs.length == 0 ? (
+  console.log(debouncedTabData);
+  return tabs.length == 0 ? (
     <>
       {/* no tabs create new tab component */}
       {/* */}
