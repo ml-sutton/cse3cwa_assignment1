@@ -45,6 +45,7 @@ export const ThemeProvider: React.FC<ThemeProviderPropTypes> = ({ children }) =>
   }, [])
   useEffect(() => {
     // Save theme to localStorage when it changes
+    if (typeof window === "undefined") return;
     if (theme === "dark" || theme === "light") {
       window.localStorage.setItem("currentTheme", theme);
     }

@@ -1,10 +1,18 @@
+import useDebounce from "../../../hooks/useDebounce"
 import { TabsContext } from "../../../utils/tabs/context/tabContext"
 import React, { useContext, useState } from "react"
+
+interface TabsFormPropTypes
+{
+  
+}
 
 export const TabsForm: React.FC = () => {
   const tabContext = useContext(TabsContext)
   const [tabName, setTabName] = useState("dbTabName")
   const [tabData, setTabData] = useState<string>("dbTabData");
+  const debouncedTabData = useDebounce(tabData, 500);
+  const debouncedTabName = useDebounce(tabName, 500);
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTabName(event.target.value);
 
