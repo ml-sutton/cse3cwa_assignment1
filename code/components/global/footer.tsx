@@ -4,7 +4,7 @@ import { ThemeContext } from "../../utils/theme/context/themeContext"
 import { useContext } from "react"
 
 export const Footer: React.FC = () => {
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
   const redirectFunction = (_: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     _.preventDefault();
     if (typeof window !== "undefined") {

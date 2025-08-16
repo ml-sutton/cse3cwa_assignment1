@@ -8,6 +8,7 @@ import { TabsOutput } from "../tabs-output/tabsOutput";
 import { TabsContext } from "../../../utils/tabs/context/tabContext";
 import { Tab } from "../../../utils/tabs/models/tab";
 import WriteTabsToLocalStorage from "../../../utils/tabs/data-access/WriteTabsToLocalStorage";
+import WriteSelectedTabToCookie from "../../../utils/tabs/data-access/WriteSelectedTabToCookie";
 
 
 export const TabsLayout: React.FC = () => {
@@ -27,6 +28,7 @@ export const TabsLayout: React.FC = () => {
       result ? console.log("tabs saved") : console.warn("error in tab saving, No tabs or window is undefined");
     }).catch(error => console.error(error));
   }, [tabs]);
+
   return (
     <section>
       <div className={`flex px-8 ${themedStyles}`}>

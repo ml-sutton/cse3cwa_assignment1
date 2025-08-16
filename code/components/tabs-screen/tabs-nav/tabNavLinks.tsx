@@ -1,3 +1,5 @@
+import WriteSelectedTabToCookie from "../../../utils/tabs/data-access/WriteSelectedTabToCookie"
+
 interface TabNavLinksPropTypes {
   tabName: string
   tabID: number
@@ -7,7 +9,8 @@ interface TabNavLinksPropTypes {
 export const TabNavLink: React.FC<TabNavLinksPropTypes> = ({ tabName, tabID, selectedTab, setSelectedTab }) => {
   const handleClick = () => {
     if (selectedTab !== tabID - 1) {
-      setSelectedTab(tabID - 1)
+      setSelectedTab(tabID)
+      WriteSelectedTabToCookie(tabID - 1).then((isSuccess) => isSuccess ? console.log("wrote to cookies successfully") : console.warn("Failed to write to cookies"))
     }
   }
   return (

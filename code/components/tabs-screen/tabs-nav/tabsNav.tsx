@@ -18,7 +18,7 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
 
   const themedStyles: string = themeContext?.theme == "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
   return (
-    <div className={`max-w-1/4 ${themedStyles} border-x-2`}>
+    <div className={`min-w-1/4 ${themedStyles} border-x-2`}>
       <TabsNavTitleBar tabName={selectedTabName} />
       <TabsNavSubHeader tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} />
       <nav>

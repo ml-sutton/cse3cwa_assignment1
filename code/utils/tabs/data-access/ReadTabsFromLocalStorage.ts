@@ -11,23 +11,26 @@ export default function ReadTabsFromLocalStorage(): Promise<Tab[] | null> {
         if (value.startsWith("TAB#")) return true;
         return false;
       })
-      const tabs: Tab[] = []
-      keys.forEach((key) => {
+      const tabs: Record<number,Tab> = {}
+      keys.forEach((key, idx) => {
         const localStorageValue = window.localStorage.getItem(key);
         if (!localStorageValue) resolve(null);
         const notNullLocalStorageValue = localStorageValue as string
         const parsedValue = JSON.parse(notNullLocalStorageValue);
 
         const newTab: Tab = {
-          tabId: parsedValue.tabId,
+          tabId: idx + 1,
           tabName: parsedValue.tabName,
           tabBody: parsedValue.tabBody,
           syntaxHighlight: parsedValue.syntaxHighlight
         };
-        tabs.push(newTab);
-        console.log(notNullLocalStorageValue)
+        tabs[parsedValue.tabId] = newTab;
       })
-      const sortedTabs: Tab[] = tabs.sort((a, b) => a.tabId - b.tabId);
+      const sortedTabs: Tab[] = [];
+      for(let i =0; i<Object.keys(tabs).length;++i)
+      {
+        sortedTabs.push(tabs[i])
+      }
       resolve(sortedTabs);
     } catch (err) {
       reject(err)

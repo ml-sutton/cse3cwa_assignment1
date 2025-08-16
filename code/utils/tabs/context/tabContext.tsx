@@ -16,20 +16,23 @@ export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ ch
   // promise to get tabs from local storage
   // after resolving 
   useEffect(() => {
-    const tabs = ReadTabsFromLocalStorage().then((tabsValue) => {
+    const tabsPromise = ReadTabsFromLocalStorage().then((tabsValue) => {
       if (tabsValue === null) return;
       setTabs(tabsValue);
-      ReadSelectedTabFromCookies(tabsValue).then((cookiesValue)=>{
-        if(cookiesValue===null) return;
-        setLoadedTab(cookiesValue);
-      }).catch((error)=> {
+      ReadSelectedTabFromCookies(tabsValue).then((cookiesValue) => {
+        if (cookiesValue === null) return;
+        if (cookiesValue > tabs.length)
+          setLoadedTab(null)
+        else
+          setLoadedTab(cookiesValue);
+      }).catch((error) => {
         console.error(error);
       })
     }).catch((error) => {
       console.error(error);
     })
     return () => {
-      
+
     }
   }, [])
 
