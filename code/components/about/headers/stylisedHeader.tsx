@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 interface StylizedH1PropTypes {
@@ -8,11 +9,21 @@ interface StylizedH1PropTypes {
 export const StylizedHeader: React.FC<StylizedH1PropTypes> = ({ text }) => {
   return (
     <div className="styled-header-wrapper">
-      <h1 className="styled-header-element">
-        <span className="layer-1-text">{text}</span>
-        <span className="layer-2-text">{text}</span>
-        <span className="layer-3-text">{text}</span>
-      </h1>
+      <div className="">
+        <div className="flex py-4 lg:py-4 px-5 items-center mr-auto justify-center">
+          <Link href="https://github.com/ml-sutton" className="group inline-grid grid-cols-1 grid-rows-1 place-items-center">
+            <div className="col-start-1 row-start-1">
+              <h1 className="col-start-1 row-start-1 text-4xl z-20 text-black ml-2 mt-1.5 group-hover:text-[#73c2fb]">{text} </h1>
+            </div>
+            <div className="col-start-1 row-start-1 z-10">
+              <h1 className="text-4xl  text-white transition-all">{text}</h1>
+            </div>
+            <div className="col-start-1 row-start-1 z-0">
+              <h1 className="text-4xl  text-black transition-all ml-1.25 mt-0.75 group-hover:text-[#F5A9B8] ">{text}</h1>
+            </div>
+          </Link>
+        </div>
+      </div>
     </div>
   )
 };

@@ -1,5 +1,6 @@
-import { MainCard } from "../../components/about/mainCard";
+import { AboutPage } from "../../components/about/AboutPage";
 
-export default function AboutPage() {
-  return (<MainCard />);
+
+export default function About() {
+  return (<AboutPage />);
 }
