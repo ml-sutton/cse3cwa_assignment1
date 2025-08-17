@@ -13,12 +13,14 @@ export const TabsOutput: React.FC<TabsOutputPropTypes> = ({ tabs }) => {
     setOutputData(data);
   }
 
-
+  const copyDataToClipboard = () => {
+    navigator.clipboard.writeText(outputData)
+  }
   return (
-    <div className="max-w-1/4 flex flex-col">
+    <div className="min-w-1/4 flex flex-col">
       <div className=" flex justify-around">
         <button onClick={() => handleTabCompilation()}>Compile Tabs</button>
-        {outputData !== "" ? (<button> Copy to clipboard</button>) : <></>}
+        {outputData !== "" ? (<button onClick={() => copyDataToClipboard()}> Copy to clipboard</button>) : <></>}
       </div>
       <hr />
       <code>

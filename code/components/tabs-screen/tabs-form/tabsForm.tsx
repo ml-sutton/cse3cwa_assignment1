@@ -49,7 +49,7 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
         <label htmlFor="tab-input">Tab Name : </label>
         <input type="text" id="tab-input" value={tabName} onChange={handleTabName} />
         <hr />
-        <textarea name="" className="min-w-1/2 h-full" value={tabData} onChange={handleTabData}></textarea>
+        <textarea name="" className="py-4 px-4 min-w-full h-full" value={tabData} onChange={handleTabData}></textarea>
       </form>
     </div>)
 

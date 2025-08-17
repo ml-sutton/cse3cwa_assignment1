@@ -26,8 +26,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const themeContext = useContext(ThemeContext);
-
   return (
     <html lang="en">
       <body
@@ -35,7 +33,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Header />
-          <div className="min-h-[100vh]">{children}</div>
+          <div className="">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>
