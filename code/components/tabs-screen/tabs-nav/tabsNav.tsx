@@ -14,20 +14,22 @@ interface TabsNavPropTypes {
 }
 export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab }) => {
   const themeContext = useContext(ThemeContext);
-  const selectedTabName: string = tabs[selectedTab] ? tabs[selectedTab].tabName : "No Tab Selected";
+  const selectedTabName: string = (tabs[selectedTab] || (tabs.length !== 0)) ? tabs[selectedTab]?.tabName : "No Tab Selected";
 
-  const themedStyles: string = themeContext?.theme == "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
+  const themedStyles: string = themeContext?.theme === "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
   return (
     <div className={`min-w-1/4 ${themedStyles} border-x-2`}>
       <TabsNavTitleBar tabName={selectedTabName} />
       <TabsNavSubHeader tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} />
       <nav>
-        {tabs.length == 0 ? (
+        {(!tabs || tabs.length == 0) ? (
           <div className="">
             You have not created any tabs yet!
           </div>
         ) : <ul>
-          {tabs.map((tab, key) => (<li key={key}><TabNavLink tabID={tab.tabId} tabName={tab.tabName ?? "untitled tab"} selectedTab={selectedTab} setSelectedTab={setSelectedTab} /></li>))}
+          {tabs.map((tab, key) => {
+            return <li key={key}><TabNavLink tabID={tab.tabId} tabName={tab.tabName ?? "untitled tab"} selectedTab={selectedTab} setSelectedTab={setSelectedTab} /></li>
+          })}
         </ul>}
       </nav>
     </div>

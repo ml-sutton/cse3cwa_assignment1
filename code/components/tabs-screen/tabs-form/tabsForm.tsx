@@ -25,13 +25,13 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTabName(event.target.value);
     const tabsCopy = [...tabs];
-    tabsCopy[selectedTab - 1].tabName = debouncedTabName;
+    tabsCopy[selectedTab].tabName = debouncedTabName;
     setTabs(tabsCopy);
   }
   const handleTabData = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTabData(event.target.value)
     const tabsCopy = [...tabs];
-    tabsCopy[selectedTab - 1].tabBody = debouncedTabData;
+    tabsCopy[selectedTab].tabBody = debouncedTabData;
     setTabs(tabsCopy)
   }
   const preventEnter = (event: React.FormEvent<HTMLFormElement>) => {

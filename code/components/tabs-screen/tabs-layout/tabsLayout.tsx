@@ -24,6 +24,8 @@ export const TabsLayout: React.FC = () => {
     setSelectedTab(tabContext?.loadedTab as number)
   }, [tabContext?.tabs, tabContext?.loadedTab])
   useEffect(() => {
+    if (tabContext?.loadedData === false || !tabContext?.loadedData) return
+    if (tabs.length === 0) return
     WriteTabsToLocalStorage(tabs).then(result => {
       result ? console.log("tabs saved") : console.warn("error in tab saving, No tabs or window is undefined");
     }).catch(error => console.error(error));
@@ -34,7 +36,7 @@ export const TabsLayout: React.FC = () => {
       <div className={`flex px-8 ${themedStyles}`}>
         <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
         <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} />
-        <TabsOutput />
+        <TabsOutput tabs={tabs} />
       </div>
     </section>
   )

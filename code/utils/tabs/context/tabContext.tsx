@@ -8,17 +8,23 @@ interface TabsContextProviderPropTypes {
 interface TabsContextExportType {
   tabs: Tab[];
   loadedTab: number | null;
+  loadedData: boolean
 }
 export const TabsContext = React.createContext<TabsContextExportType | null>(null);
 export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ children }) => {
   const [tabs, setTabs] = useState<Tab[]>([])
   const [loadedTab, setLoadedTab] = useState<number | null>(null);
+  const [loadedData, setLoadedData] = useState<boolean>(false);
   // promise to get tabs from local storage
   // after resolving 
   useEffect(() => {
     const tabsPromise = ReadTabsFromLocalStorage().then((tabsValue) => {
-      if (tabsValue === null) return;
+      if (tabsValue === null) {
+        setLoadedData(false);
+        return;
+      }
       setTabs(tabsValue);
+      setLoadedData(true);
       ReadSelectedTabFromCookies(tabsValue).then((cookiesValue) => {
         if (cookiesValue === null) return;
         if (cookiesValue > tabs.length)
@@ -31,6 +37,7 @@ export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ ch
     }).catch((error) => {
       console.error(error);
     })
+
     return () => {
 
     }
@@ -41,7 +48,7 @@ export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ ch
 
 
   return (
-    <TabsContext.Provider value={{ tabs, loadedTab }}>
+    <TabsContext.Provider value={{ tabs, loadedTab, loadedData }}>
       {children}
     </TabsContext.Provider>
   )

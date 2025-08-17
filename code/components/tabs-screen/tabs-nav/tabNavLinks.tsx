@@ -7,6 +7,7 @@ interface TabNavLinksPropTypes {
   setSelectedTab: React.Dispatch<React.SetStateAction<number>>
 }
 export const TabNavLink: React.FC<TabNavLinksPropTypes> = ({ tabName, tabID, selectedTab, setSelectedTab }) => {
+
   const handleClick = () => {
     if (selectedTab !== tabID - 1) {
       setSelectedTab(tabID)
