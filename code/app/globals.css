@@ -174,3 +174,6 @@ input[type="checkbox"]:checked+label .bar-bottom {
 input:checked~.checkbox-label span {
   left: 1.8em;
 }
+
+
+

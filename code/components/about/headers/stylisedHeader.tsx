@@ -7,8 +7,12 @@ interface StylizedH1PropTypes {
 
 export const StylizedHeader: React.FC<StylizedH1PropTypes> = ({ text }) => {
   return (
-    <div className="">
-      {text}
+    <div className="styled-header-wrapper">
+      <h1 className="styled-header-element">
+        <span className="layer-1-text">{text}</span>
+        <span className="layer-2-text">{text}</span>
+        <span className="layer-3-text">{text}</span>
+      </h1>
     </div>
   )
 };
