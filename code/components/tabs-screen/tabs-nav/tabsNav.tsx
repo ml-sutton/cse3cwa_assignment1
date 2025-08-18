@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useContext } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { TabsNavTitleBar } from "./tabsNavTitleBar";
 import { ThemeContext } from "../../../utils/theme/context/themeContext";
 import { TabsNavSubHeader } from "./tabsNavSubheader";
@@ -14,9 +14,16 @@ interface TabsNavPropTypes {
 }
 export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab }) => {
   const themeContext = useContext(ThemeContext);
-  const selectedTabName: string = (tabs[selectedTab] || (tabs.length !== 0)) ? tabs[selectedTab]?.tabName : "No Tab Selected";
-
+  const dbSelectedTabName: string = (tabs[selectedTab] || (tabs.length !== 0)) ? tabs[selectedTab - 2]?.tabName : "No Tab Selected";
+  const [selectedTabName, setSelectedTabName] = useState<string>(dbSelectedTabName);
   const themedStyles: string = themeContext?.theme === "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
+  useEffect(() => {
+    const newTabName: string = (tabs[selectedTab] || (tabs.length !== 0)) ? tabs[selectedTab - 1]?.tabName : "no tab found";
+    setSelectedTabName(newTabName)
+    console.log(selectedTab, newTabName)
+  }, [selectedTab])
+
+
   return (
     <div className={`min-w-1/4 ${themedStyles} border-x-2`}>
       <TabsNavTitleBar tabName={selectedTabName} />

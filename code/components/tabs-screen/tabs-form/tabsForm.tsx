@@ -12,21 +12,25 @@ interface TabsFormPropTypes {
 export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab }) => {
   const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "Tab not found";
   const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "body not found"
+  const dbTabCount = tabs.length !== 0 ? tabs.length : 0;
   const [tabName, setTabName] = useState<string>(dbTabName);
   const [tabData, setTabData] = useState<string>(dbTabBody);
+  const [tabCount, setTabCount] = useState<number>(dbTabCount)
   useEffect(() => {
     if (tabs.length === 0) return
-    const tabIdx = selectedTab == 0 ? 0 : selectedTab - 1
-    setTabName(tabs[tabIdx].tabName)
-    setTabData(tabs[tabIdx].tabBody)
+    const tabIdx = selectedTab == 0 ? 0 : selectedTab - 1;
+    setTabName(tabs[tabIdx]?.tabName)
+    setTabData(tabs[tabIdx]?.tabBody)
   }, [selectedTab])
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (tabName === "No Tab Selected") return;
     setTabName(event.target.value);
     const tabsCopy = [...tabs];
     tabsCopy[selectedTab - 1].tabName = tabName;
     setTabs(tabsCopy);
   }
   const handleTabData = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (tabName === "No Tab Selected") return;
     setTabData(event.target.value)
     const tabsCopy = [...tabs];
     tabsCopy[selectedTab - 1].tabBody = tabData;
@@ -35,6 +39,14 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
   const preventEnter = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   }
+  // useEffect(() => {
+  //   if (tabs.length === 0) {
+  //     setTabName("No Tab Selected");
+  //     setTabData("No Tab Selected or no tabs exists");
+  //   }
+  //   console.log("tab deleted")
+  //   setTabCount(dbTabCount)
+  // }, [tabs, dbTabCount])
   return tabs.length == 0 ? (
     <>
       {/* no tabs create new tab component */}

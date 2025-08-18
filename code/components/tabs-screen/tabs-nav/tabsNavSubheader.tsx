@@ -1,3 +1,4 @@
+import DeleteTabFromLocalStorage from "../../../utils/tabs/data-access/DeleteTabFromLocalStorage.";
 import { Tab } from "../../../utils/tabs/models/tab";
 interface TabsNavSubHeaderPropTypes {
   tabs: Tab[]
@@ -22,24 +23,21 @@ export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, se
     setTabs([...allTabs, tab]);
 
   }
-  const removeTab = () => {
-    if (tabCount == 0) alert("cannot remove tabs : No tabs exist")
-    const tabToRemove: Tab = tabs[selectedTab - 1]
-    const allTabs = tabs
-    const newTabs = allTabs.filter((tabs) => tabs.tabId != tabToRemove.tabId)
-    setTabs(newTabs);
-    if (typeof window === "undefined") return
-    window.localStorage.removeItem(`TAB#${selectedTab - 1}`)
-  }
   const deleteTab = () => {
-
+    const tabToDelete: number = selectedTab;
+    const didDelete = DeleteTabFromLocalStorage(tabs, tabToDelete);
+    didDelete.then(tabsValue => {
+      setTabs(tabsValue)
+    }).catch(error => {
+      console.error(error)
+    })
   }
   return (
 
     <div className="flex w-full justify-end gap-4 pl-4 px-2 border-t-2 border-b-2">
       <p className="mr-auto">{tabCount}/15</p>
       <button onClick={() => createTab()}>+</button>
-      <button onClick={() => removeTab()}>-</button>
+      <button onClick={() => deleteTab()}>-</button>
     </div>
   )
 }

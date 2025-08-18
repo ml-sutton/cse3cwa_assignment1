@@ -25,8 +25,11 @@ export const TabsLayout: React.FC = () => {
   }, [tabContext?.tabs, tabContext?.loadedTab])
   useEffect(() => {
     if (tabContext?.loadedData === false || !tabContext?.loadedData) return
+    console.log("passing first condition");
     if (tabs.length === 0) return
+    console.log("passed second condition");
     WriteTabsToLocalStorage(tabs).then(result => {
+      console.log("this is working")
       result ? console.log("tabs saved") : console.warn("error in tab saving, No tabs or window is undefined");
     }).catch(error => console.error(error));
   }, [tabs]);
