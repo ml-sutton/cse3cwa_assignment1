@@ -1,3 +1,6 @@
+"use client";
+import { useEffect, useState } from "react";
+import CreateNewTab from "../../../utils/tabs/data-access/CreateNewTab";
 import DeleteTabFromLocalStorage from "../../../utils/tabs/data-access/DeleteTabFromLocalStorage.";
 import { Tab } from "../../../utils/tabs/models/tab";
 interface TabsNavSubHeaderPropTypes {
@@ -6,21 +9,20 @@ interface TabsNavSubHeaderPropTypes {
   selectedTab: number
 }
 export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, setTabs, selectedTab }) => {
-  const tabCount = tabs.length ?? 0;
+  const [tabCount, setTabCount] = useState<number>(tabs.length ?? 0);
   const createTab = () => {
-    const tabId = tabCount + 1;
-    if (tabId == 16) {
-      alert("YOU HAVE REACHED THE MAXIUM AMOUNT OF TABS")
-      return;
-    }
-    const tab: Tab = {
-      tabId: tabId,
-      tabName: `new tab #${tabId}`,
-      tabBody: "# Edit me!",
-      syntaxHighlight: false
-    }
-    const allTabs = tabs ?? [];
-    setTabs([...allTabs, tab]);
+    console.log(tabCount)
+    CreateNewTab(tabs, tabCount).then(newTabs => {
+      setTabs(newTabs);
+      setTabCount(prev => prev = prev + 1)
+    }).catch(error => {
+      console.warn(error);
+      setTabs(tabs);
+    })
+    useEffect(() => {
+      setTabCount(tabs.length)
+    }, [tabs])
+
 
   }
   const deleteTab = () => {
