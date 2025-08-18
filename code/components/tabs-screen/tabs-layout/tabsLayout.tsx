@@ -22,6 +22,7 @@ export const TabsLayout: React.FC = () => {
   useEffect(() => {
     setTabs([...tabContext?.tabs as Tab[]])
     setSelectedTab(tabContext?.loadedTab as number)
+    console.log(`cookie = ${tabContext?.loadedTab as number}`)
   }, [tabContext?.tabs, tabContext?.loadedTab])
   useEffect(() => {
     console.log("This part is running");

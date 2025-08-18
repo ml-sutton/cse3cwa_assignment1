@@ -21,17 +21,14 @@ export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ ch
     ReadTabsFromLocalStorage().then((tabsValue) => {
       if (tabsValue === null) {
         setLoadedData(false);
-        
+
         return;
       }
       setTabs(tabsValue);
       setLoadedData(true);
       ReadSelectedTabFromCookies(tabsValue).then((cookiesValue) => {
         if (cookiesValue === null) return;
-        if (cookiesValue > tabs.length)
-          setLoadedTab(null)
-        else
-          setLoadedTab(cookiesValue);
+        setLoadedTab(cookiesValue + 1);
       }).catch((error) => {
         console.error(error);
       })

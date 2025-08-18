@@ -11,8 +11,8 @@ interface TabsFormPropTypes {
 }
 
 export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab }) => {
-  const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "Tab not found";
-  const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "body not found"
+  const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "No Tab Selected";
+  const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "No Tab Selected or no tabs exists"
   const dbTabCount = tabs.length !== 0 ? tabs.length : 0;
   const [tabName, setTabName] = useState<string>(dbTabName);
   const [tabData, setTabData] = useState<string>(dbTabBody);
@@ -23,7 +23,7 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       setTabName(tabValue.tabName)
       setTabData(tabValue.tabBody)
     }).catch(error => {
-      console.error("Tab Not Found")
+      console.warn(error)
     })
   }, [selectedTab])
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
         }
       });
     }).catch(error => {
-      console.error("Error in finding tab name : tab not found")
+      console.warn(error)
     })
 
   }
@@ -57,7 +57,7 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
         }
       })
     }).catch(error => {
-      console.error("Error in finding tab data : tab not found")
+      console.error(error)
     })
   }
   const preventEnter = (event: React.FormEvent<HTMLFormElement>) => {
@@ -71,6 +71,9 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
     console.log("tab deleted")
     setTabCount(dbTabCount)
   }, [tabs, dbTabCount])
+  useEffect(() => {
+
+  }, [])
   return tabs.length == 0 ? (
     <>
       {/* no tabs create new tab component */}

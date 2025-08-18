@@ -4,6 +4,6 @@ export default function ReadSelectedTabFromCookies(tabs: Tab[]): Promise<number 
   return new Promise((resolve, reject) => {
     if (tabs.length == 0) resolve(null);
     const match = document.cookie.match(/(?:^|; )selectedItem=([^;]*)/);
-    resolve(match ? Number(decodeURIComponent(match[1])):null);
+    resolve(match ? Number(decodeURIComponent(match[1])) : null);
   })
 }
