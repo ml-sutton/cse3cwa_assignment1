@@ -10,9 +10,15 @@ export default function ReadTabsFromLocalStorage(): Promise<Tab[] | null> {
         const tabs: Tab[] = JSON.parse(value);
         return resolve(tabs);
       };
-      resolve(null);
+      window.localStorage.setItem("tabs", JSON.stringify([]));
+      const refetchedValue = window.localStorage.getItem("tabs");
+      if (refetchedValue !== null) {
+        const tabs: Tab[] = JSON.parse(refetchedValue);
+        return resolve(tabs);
+      }
+      return resolve(null)
     } catch (err) {
-      reject(err)
+      return reject(err)
     }
   })
 }

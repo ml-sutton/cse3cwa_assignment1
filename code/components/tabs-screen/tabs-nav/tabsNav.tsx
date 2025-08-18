@@ -6,6 +6,7 @@ import { ThemeContext } from "../../../utils/theme/context/themeContext";
 import { TabsNavSubHeader } from "./tabsNavSubheader";
 import { TabNavLink } from "./tabNavLinks";
 import { Tab } from "../../../utils/tabs/models/tab";
+import GetTabByID from "../../../utils/tabs/data-access/GetTabByID";
 interface TabsNavPropTypes {
   tabs: Tab[]
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
@@ -18,11 +19,14 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
   const [selectedTabName, setSelectedTabName] = useState<string>(dbSelectedTabName);
   const themedStyles: string = themeContext?.theme === "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
   useEffect(() => {
-    const newTabName: string = (tabs[selectedTab] || (tabs.length !== 0)) ? tabs[selectedTab - 1]?.tabName : "no tab found";
-    setSelectedTabName(newTabName)
-    console.log(selectedTab, newTabName)
+    GetTabByID(tabs, selectedTab).then(tabValue => {
+      const newTabName = tabValue.tabName;
+      setSelectedTabName(newTabName)
+      console.log(selectedTab, newTabName)
+    }).catch(error => {
+      console.error(error)
+    })
   }, [selectedTab])
-
 
   return (
     <div className={`min-w-1/4 ${themedStyles} border-x-2`}>

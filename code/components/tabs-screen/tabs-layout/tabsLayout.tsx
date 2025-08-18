@@ -24,7 +24,11 @@ export const TabsLayout: React.FC = () => {
     setSelectedTab(tabContext?.loadedTab as number)
   }, [tabContext?.tabs, tabContext?.loadedTab])
   useEffect(() => {
-    if (tabContext?.loadedData === false || !tabContext?.loadedData) return
+    console.log("This part is running");
+    if (tabContext?.loadedData === false || !tabContext?.loadedData) {
+      console.log(tabContext?.loadedData);
+      return
+    }
     console.log("passing first condition");
     if (tabs.length === 0) return
     console.log("passed second condition");

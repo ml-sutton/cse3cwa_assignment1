@@ -2,6 +2,7 @@ import useDebounce from "../../../hooks/useDebounce"
 import { TabsContext } from "../../../utils/tabs/context/tabContext"
 import React, { useContext, useEffect, useState } from "react"
 import { Tab } from "../../../utils/tabs/models/tab"
+import GetTabByID from "../../../utils/tabs/data-access/GetTabByID"
 
 interface TabsFormPropTypes {
   tabs: Tab[]
@@ -18,35 +19,58 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
   const [tabCount, setTabCount] = useState<number>(dbTabCount)
   useEffect(() => {
     if (tabs.length === 0) return
-    const tabIdx = selectedTab == 0 ? 0 : selectedTab - 1;
-    setTabName(tabs[tabIdx]?.tabName)
-    setTabData(tabs[tabIdx]?.tabBody)
+    GetTabByID(tabs, selectedTab).then(tabValue => {
+      setTabName(tabValue.tabName)
+      setTabData(tabValue.tabBody)
+    }).catch(error => {
+      console.error("Tab Not Found")
+    })
   }, [selectedTab])
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (tabName === "No Tab Selected") return;
     setTabName(event.target.value);
     const tabsCopy = [...tabs];
-    tabsCopy[selectedTab - 1].tabName = tabName;
-    setTabs(tabsCopy);
+    GetTabByID(tabsCopy, selectedTab).then(tabValue => {
+      const tabToEdit = tabValue.tabId;
+      tabsCopy.forEach((tabItem) => {
+        if (tabItem.tabId === tabToEdit) {
+          tabItem.tabName = tabName;
+          setTabs(tabsCopy);
+
+        }
+      });
+    }).catch(error => {
+      console.error("Error in finding tab name : tab not found")
+    })
+
   }
   const handleTabData = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (tabName === "No Tab Selected") return;
     setTabData(event.target.value)
     const tabsCopy = [...tabs];
-    tabsCopy[selectedTab - 1].tabBody = tabData;
-    setTabs(tabsCopy)
+    GetTabByID(tabsCopy, selectedTab).then(tabValue => {
+      const tabToEdit = tabValue.tabId;
+      tabsCopy.forEach((tabItem) => {
+        if (tabItem.tabId === tabToEdit) {
+          tabItem.tabBody = tabData;
+          setTabs(tabsCopy)
+        }
+      })
+    }).catch(error => {
+      console.error("Error in finding tab data : tab not found")
+    })
   }
   const preventEnter = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   }
-  // useEffect(() => {
-  //   if (tabs.length === 0) {
-  //     setTabName("No Tab Selected");
-  //     setTabData("No Tab Selected or no tabs exists");
-  //   }
-  //   console.log("tab deleted")
-  //   setTabCount(dbTabCount)
-  // }, [tabs, dbTabCount])
+  useEffect(() => {
+    if (tabs.length === 0) {
+      setTabName("No Tab Selected");
+      setTabData("No Tab Selected or no tabs exists");
+    }
+    console.log("tab deleted")
+    setTabCount(dbTabCount)
+  }, [tabs, dbTabCount])
   return tabs.length == 0 ? (
     <>
       {/* no tabs create new tab component */}
