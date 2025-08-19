@@ -17,33 +17,33 @@ export const TabsLayout: React.FC = () => {
   const tabContext = useContext(TabsContext);
   const tabsValue = tabContext?.tabs ? [...tabContext.tabs] : []
   const selectedTabvalue = tabContext?.loadedTab ? tabContext.loadedTab : 0
+  const tabCountValue = tabContext?.tabCount ? tabContext.tabCount : 0;
   const [tabs, setTabs] = useState<Tab[]>(tabsValue)
   const [selectedTab, setSelectedTab] = useState<number>(selectedTabvalue);
+  const [tabCount, setTabCount] = useState(tabCountValue);
+  const [loadedData, setLoadedData] = useState<boolean>(false);
   useEffect(() => {
     setTabs([...tabContext?.tabs as Tab[]])
     setSelectedTab(tabContext?.loadedTab as number)
-    console.log(`cookie = ${tabContext?.loadedTab as number}`)
+    setTabCount(tabContext?.tabCount as number);
   }, [tabContext?.tabs, tabContext?.loadedTab])
   useEffect(() => {
-    console.log("This part is running");
     if (tabContext?.loadedData === false || !tabContext?.loadedData) {
-      console.log(tabContext?.loadedData);
       return
     }
-    console.log("passing first condition");
     if (tabs.length === 0) return
-    console.log("passed second condition");
     WriteTabsToLocalStorage(tabs).then(result => {
-      console.log("this is working")
       result ? console.log("tabs saved") : console.warn("error in tab saving, No tabs or window is undefined");
+      setTabCount(tabs.length);
+      setLoadedData(true)
     }).catch(error => console.error(error));
   }, [tabs]);
 
   return (
     <section>
       <div className={`flex px-8 py-8 min-h-[100vh] ${themedStyles}`}>
-        <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} />
+        <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabCount={tabCount} />
+        <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} tabCount={tabCount} loadedData={loadedData} />
         <TabsOutput tabs={tabs} />
       </div>
     </section>

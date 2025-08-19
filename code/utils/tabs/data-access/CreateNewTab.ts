@@ -11,7 +11,7 @@ export default function CreateNewTab(currentTabs: Tab[], tabCount: number): Prom
           usedTabIDs.push(tabItem.tabId)
       })
       const tabId = generateTabId(usedTabIDs);
-      if (tabId == 16) {
+      if (tabCount + 1 == 16) {
         alert("YOU HAVE REACHED THE MAXIUM AMOUNT OF TABS")
         return;
       }

@@ -1,5 +1,3 @@
-"use client";
-import { useEffect, useState } from "react";
 import CreateNewTab from "../../../utils/tabs/data-access/CreateNewTab";
 import DeleteTabFromLocalStorage from "../../../utils/tabs/data-access/DeleteTabFromLocalStorage.";
 import { Tab } from "../../../utils/tabs/models/tab";
@@ -7,22 +5,18 @@ interface TabsNavSubHeaderPropTypes {
   tabs: Tab[]
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
   selectedTab: number
+  setSelectedTab: React.Dispatch<React.SetStateAction<number>>
+  tabCount: number
 }
-export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, setTabs, selectedTab }) => {
-  const [tabCount, setTabCount] = useState<number>(tabs.length ?? 0);
+export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab, tabCount }) => {
   const createTab = () => {
     console.log(tabCount)
     CreateNewTab(tabs, tabCount).then(newTabs => {
       setTabs(newTabs);
-      setTabCount(prev => prev = prev + 1)
     }).catch(error => {
       console.warn(error);
       setTabs(tabs);
     })
-    useEffect(() => {
-      setTabCount(tabs.length)
-    }, [tabs])
-
 
   }
   const deleteTab = () => {
@@ -30,6 +24,7 @@ export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, se
     const didDelete = DeleteTabFromLocalStorage(tabs, tabToDelete);
     didDelete.then(tabsValue => {
       setTabs(tabsValue)
+      setSelectedTab(tabToDelete+1);
     }).catch(error => {
       console.error(error)
     })

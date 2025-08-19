@@ -2,20 +2,20 @@ import { TabsContext } from "../../../utils/tabs/context/tabContext"
 import React, { useContext, useEffect, useState } from "react"
 import { Tab } from "../../../utils/tabs/models/tab"
 import GetTabByID from "../../../utils/tabs/data-access/GetTabByID"
-
+import CreateNewTab from "../../../utils/tabs/data-access/CreateNewTab"
 interface TabsFormPropTypes {
   tabs: Tab[]
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
   selectedTab: number
+  tabCount: number
+  loadedData: boolean
 }
 
-export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab }) => {
+export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab, tabCount, loadedData }) => {
   const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "No Tab Selected";
   const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "No Tab Selected or no tabs exists"
-  const dbTabCount = tabs.length !== 0 ? tabs.length : 0;
   const [tabName, setTabName] = useState<string>(dbTabName);
   const [tabData, setTabData] = useState<string>(dbTabBody);
-  const [tabCount, setTabCount] = useState<number>(dbTabCount)
   useEffect(() => {
     if (tabs.length === 0) return
     GetTabByID(tabs, selectedTab).then(tabValue => {
@@ -63,21 +63,21 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
     event.preventDefault();
   }
   useEffect(() => {
-    if (tabs.length === 0) {
+    if (tabCount === 0) {
       setTabName("No Tab Selected");
       setTabData("No Tab Selected or no tabs exists");
+      return
+    } else {
+      setTabName(tabs[0].tabName)
+      setTabData(tabs[0].tabBody)
     }
-    console.log("tab deleted")
-    setTabCount(dbTabCount)
-  }, [tabs, dbTabCount])
-  useEffect(() => {
 
-  }, [])
+  }, [loadedData])
   return tabs.length == 0 ? (
-    <>
-      {/* no tabs create new tab component */}
-      {/* */}
-    </>
+    <div className="min-w-1/2 h-full flex justify-center items-center flex-col">
+      <h1>You haven't created any tabs yet!</h1>
+      <p>Press the + button on the lefthand side of the screen to create some tabs!</p>
+    </div>
   ) :
     (<div className="min-w-1/2 h-full">
       <form onSubmit={preventEnter}>

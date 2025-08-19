@@ -9,22 +9,24 @@ interface TabsContextExportType {
   tabs: Tab[];
   loadedTab: number | null;
   loadedData: boolean
+  tabCount: number
 }
 export const TabsContext = React.createContext<TabsContextExportType | null>(null);
 export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ children }) => {
   const [tabs, setTabs] = useState<Tab[]>([])
   const [loadedTab, setLoadedTab] = useState<number | null>(null);
   const [loadedData, setLoadedData] = useState<boolean>(false);
+  const [tabCount, setTabCount] = useState<number>(0);
   // promise to get tabs from local storage
   // after resolving 
   useEffect(() => {
     ReadTabsFromLocalStorage().then((tabsValue) => {
       if (tabsValue === null) {
         setLoadedData(false);
-
         return;
       }
       setTabs(tabsValue);
+      setTabCount(tabsValue.length);
       setLoadedData(true);
       ReadSelectedTabFromCookies(tabsValue).then((cookiesValue) => {
         if (cookiesValue === null) return;
@@ -46,7 +48,7 @@ export const TabsContextProvider: React.FC<TabsContextProviderPropTypes> = ({ ch
 
 
   return (
-    <TabsContext.Provider value={{ tabs, loadedTab, loadedData }}>
+    <TabsContext.Provider value={{ tabs, loadedTab, loadedData, tabCount }}>
       {children}
     </TabsContext.Provider>
   )

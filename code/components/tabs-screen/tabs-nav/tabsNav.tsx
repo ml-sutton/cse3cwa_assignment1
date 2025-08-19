@@ -12,8 +12,9 @@ interface TabsNavPropTypes {
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
   selectedTab: number
   setSelectedTab: React.Dispatch<React.SetStateAction<number>>
+  tabCount: number
 }
-export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab }) => {
+export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab, tabCount }) => {
   const themeContext = useContext(ThemeContext);
   const dbSelectedTabName: string = (tabs[selectedTab] || (tabs.length !== 0)) ? tabs[selectedTab - 2]?.tabName : "No Tab Selected";
   const [selectedTabName, setSelectedTabName] = useState<string>(dbSelectedTabName);
@@ -24,14 +25,14 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
       setSelectedTabName(newTabName)
       console.log(selectedTab, newTabName)
     }).catch(error => {
-      console.error(error)
+      console.warn(error)
     })
   }, [selectedTab])
 
   return (
     <div className={`min-w-1/4 ${themedStyles} border-x-2`}>
       <TabsNavTitleBar tabName={selectedTabName} />
-      <TabsNavSubHeader tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} />
+      <TabsNavSubHeader tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} tabCount={tabCount} setSelectedTab={setSelectedTab} />
       <nav>
         {(!tabs || tabs.length == 0) ? (
           <div className="">
