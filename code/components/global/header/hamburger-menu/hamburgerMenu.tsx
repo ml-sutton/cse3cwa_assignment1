@@ -1,7 +1,6 @@
 "use client"
 import { PageLinks } from "../../../../const/pagelinks"
 import { HamburgerLink } from "./hamburgerLink"
-import { ThemeSwitcher } from "../theme-switcher/themeSwitcher";
 
 interface HamburgerMenuPropTypes {
   isOpen: boolean

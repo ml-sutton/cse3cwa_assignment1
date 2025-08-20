@@ -8,7 +8,6 @@ import { TabsOutput } from "../tabs-output/tabsOutput";
 import { TabsContext } from "../../../utils/tabs/context/tabContext";
 import { Tab } from "../../../utils/tabs/models/tab";
 import WriteTabsToLocalStorage from "../../../utils/tabs/data-access/WriteTabsToLocalStorage";
-import WriteSelectedTabToCookie from "../../../utils/tabs/data-access/WriteSelectedTabToCookie";
 
 
 export const TabsLayout: React.FC = () => {
@@ -17,25 +16,36 @@ export const TabsLayout: React.FC = () => {
   const tabContext = useContext(TabsContext);
   const tabsValue = tabContext?.tabs ? [...tabContext.tabs] : []
   const selectedTabvalue = tabContext?.loadedTab ? tabContext.loadedTab : 0
+  const tabCountValue = tabContext?.tabCount ? tabContext.tabCount : 0;
   const [tabs, setTabs] = useState<Tab[]>(tabsValue)
   const [selectedTab, setSelectedTab] = useState<number>(selectedTabvalue);
+  const [tabCount, setTabCount] = useState(tabCountValue);
+  const [loadedData, setLoadedData] = useState<boolean>(false);
   useEffect(() => {
     setTabs([...tabContext?.tabs as Tab[]])
     setSelectedTab(tabContext?.loadedTab as number)
-  }, [tabContext?.tabs, tabContext?.loadedTab])
+    setTabCount(tabContext?.tabCount as number);
+  }, [tabContext?.tabs, tabContext?.loadedTab, tabContext?.tabCount])
   useEffect(() => {
-    if (tabContext?.loadedData === false || !tabContext?.loadedData) return
+    if (tabContext?.loadedData === false || !tabContext?.loadedData) {
+      return
+    }
     if (tabs.length === 0) return
     WriteTabsToLocalStorage(tabs).then(result => {
-      result ? console.log("tabs saved") : console.warn("error in tab saving, No tabs or window is undefined");
+      if (result)
+        console.log("tabs saved")
+      else
+        console.warn("error in tab saving, No tabs or window is undefined");
+      setTabCount(tabs.length);
+      setLoadedData(true)
     }).catch(error => console.error(error));
-  }, [tabs]);
+  }, [tabs, tabContext?.loadedData]);
 
   return (
     <section>
       <div className={`flex px-8 py-8 min-h-[100vh] ${themedStyles}`}>
-        <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} />
+        <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabCount={tabCount} />
+        <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} tabCount={tabCount} loadedData={loadedData} />
         <TabsOutput tabs={tabs} />
       </div>
     </section>

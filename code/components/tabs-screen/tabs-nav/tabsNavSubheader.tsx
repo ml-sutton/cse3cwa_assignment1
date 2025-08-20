@@ -1,45 +1,44 @@
+import CreateNewTab from "../../../utils/tabs/data-access/CreateNewTab";
+import DeleteTabFromLocalStorage from "../../../utils/tabs/data-access/DeleteTabFromLocalStorage.";
 import { Tab } from "../../../utils/tabs/models/tab";
 interface TabsNavSubHeaderPropTypes {
   tabs: Tab[]
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
   selectedTab: number
+  setSelectedTab: React.Dispatch<React.SetStateAction<number>>
+  tabCount: number
 }
-export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, setTabs, selectedTab }) => {
-  const tabCount = tabs.length ?? 0;
+export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab, tabCount }) => {
   const createTab = () => {
-    const tabId = tabCount + 1;
-    if (tabId == 16) {
-      alert("YOU HAVE REACHED THE MAXIUM AMOUNT OF TABS")
-      return;
-    }
-    const tab: Tab = {
-      tabId: tabId,
-      tabName: `new tab #${tabId}`,
-      tabBody: "# Edit me!",
-      syntaxHighlight: false
-    }
-    const allTabs = tabs ?? [];
-    setTabs([...allTabs, tab]);
+    console.log(tabCount)
+    CreateNewTab(tabs, tabCount).then(newTabs => {
+      setTabs(newTabs);
+    }).catch(error => {
+      console.warn(error);
+      setTabs(tabs);
+    })
 
-  }
-  const removeTab = () => {
-    if (tabCount == 0) alert("cannot remove tabs : No tabs exist")
-    const tabToRemove: Tab = tabs[selectedTab - 1]
-    const allTabs = tabs
-    const newTabs = allTabs.filter((tabs) => tabs.tabId != tabToRemove.tabId)
-    setTabs(newTabs);
-    if (typeof window === "undefined") return
-    window.localStorage.removeItem(`TAB#${selectedTab - 1}`)
   }
   const deleteTab = () => {
-
+    const tabToDelete: number = selectedTab;
+    const didDelete = DeleteTabFromLocalStorage(tabs, tabToDelete);
+    didDelete.then(tabsValue => {
+      setTabs(tabsValue)
+      setSelectedTab(tabToDelete + 1);
+    }).catch(error => {
+      console.warn(error)
+      if (tabs.length == 0) {
+        setSelectedTab(0);
+        console.log(tabCount)
+      }
+    })
   }
   return (
 
     <div className="flex w-full justify-end gap-4 pl-4 px-2 border-t-2 border-b-2">
       <p className="mr-auto">{tabCount}/15</p>
       <button onClick={() => createTab()}>+</button>
-      <button onClick={() => removeTab()}>-</button>
+      <button onClick={() => deleteTab()}>-</button>
     </div>
   )
 }

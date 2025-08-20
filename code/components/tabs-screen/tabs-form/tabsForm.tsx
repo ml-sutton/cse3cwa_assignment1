@@ -1,45 +1,84 @@
-import useDebounce from "../../../hooks/useDebounce"
-import { TabsContext } from "../../../utils/tabs/context/tabContext"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Tab } from "../../../utils/tabs/models/tab"
-
+import GetTabByID from "../../../utils/tabs/data-access/GetTabByID"
 interface TabsFormPropTypes {
   tabs: Tab[]
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
   selectedTab: number
+  tabCount: number
+  loadedData: boolean
 }
 
-export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab }) => {
-  const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "Tab not found";
-  const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "body not found"
+export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab, tabCount, loadedData }) => {
+  const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "No Tab Selected";
+  const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "No Tab Selected or no tabs exists"
   const [tabName, setTabName] = useState<string>(dbTabName);
   const [tabData, setTabData] = useState<string>(dbTabBody);
   useEffect(() => {
     if (tabs.length === 0) return
-    const tabIdx = selectedTab == 0 ? 0 : selectedTab - 1
-    setTabName(tabs[tabIdx].tabName)
-    setTabData(tabs[tabIdx].tabBody)
+    GetTabByID(tabs, selectedTab).then(tabValue => {
+      setTabName(tabValue.tabName)
+      setTabData(tabValue.tabBody)
+    }).catch(error => {
+      console.warn(error)
+      setTabName("No Tab Selected");
+      setTabData("No Tab Selected or no tabs exists");
+    })
+    // eslint-disable-next-line
   }, [selectedTab])
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (tabName === "No Tab Selected") return;
     setTabName(event.target.value);
     const tabsCopy = [...tabs];
-    tabsCopy[selectedTab - 1].tabName = tabName;
-    setTabs(tabsCopy);
+    GetTabByID(tabsCopy, selectedTab).then(tabValue => {
+      const tabToEdit = tabValue.tabId;
+      tabsCopy.forEach((tabItem) => {
+        if (tabItem.tabId === tabToEdit) {
+          tabItem.tabName = tabName;
+          setTabs(tabsCopy);
+
+        }
+      });
+    }).catch(error => {
+      console.warn(error)
+    })
+
   }
   const handleTabData = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (tabName === "No Tab Selected") return;
     setTabData(event.target.value)
     const tabsCopy = [...tabs];
-    tabsCopy[selectedTab - 1].tabBody = tabData;
-    setTabs(tabsCopy)
+    GetTabByID(tabsCopy, selectedTab).then(tabValue => {
+      const tabToEdit = tabValue.tabId;
+      tabsCopy.forEach((tabItem) => {
+        if (tabItem.tabId === tabToEdit) {
+          tabItem.tabBody = tabData;
+          setTabs(tabsCopy)
+        }
+      })
+    }).catch(error => {
+      console.error(error)
+    })
   }
   const preventEnter = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   }
+  useEffect(() => {
+    if (tabCount === 0) {
+      setTabName("No Tab Selected");
+      setTabData("No Tab Selected or no tabs exists");
+      return
+    } else {
+      setTabName(tabs[0].tabName)
+      setTabData(tabs[0].tabBody)
+    }
+    // eslint-disable-next-line
+  }, [loadedData])
   return tabs.length == 0 ? (
-    <>
-      {/* no tabs create new tab component */}
-      {/* */}
-    </>
+    <div className="min-w-1/2 h-full flex justify-center items-center flex-col">
+      <h1>You haven&#39;t created any tabs yet!</h1>
+      <p>Press the + button on the lefthand side of the screen to create some tabs!</p>
+    </div>
   ) :
     (<div className="min-w-1/2 h-full">
       <form onSubmit={preventEnter}>

@@ -4,7 +4,7 @@
 export default function WriteSelectedTabToCookie(selectedTab: number): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const oneYearInSeconds = 60 * 60 * 24 * 365
-    document.cookie = `selectedItem=${encodeURIComponent(selectedTab)}; Max-Age=${oneYearInSeconds}; path=/`;
+    document.cookie = `selectedItem=${encodeURIComponent(selectedTab - 1)}; Max-Age=${oneYearInSeconds}; path=/`;
     resolve(true);
   })
 }

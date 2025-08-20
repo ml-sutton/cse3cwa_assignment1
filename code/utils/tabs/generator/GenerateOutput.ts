@@ -1,8 +1,11 @@
 import { Tab } from "../models/tab";
+import SanitizeTabs from "../security/SanitizeTabs";
 
 export const GenerateTabOutput = (tabs: Tab[]) => {
-  const tabDataString = JSON.stringify(tabs, null, 2); // pretty print for readability
-
+  const sanitizedTabs = SanitizeTabs(tabs)
+  const tabDataString = JSON.stringify(sanitizedTabs, null, 2);
+  // BEGIN
+  // THIS CODE IS AI GENERATED
   return `
 <section class="tabs-section">
   <nav class="tabs-nav"></nav>
@@ -50,4 +53,5 @@ export const GenerateTabOutput = (tabs: Tab[]) => {
   if (activeTabId) setActiveTab(activeTabId);
 </script>
   `;
+  // END
 };
