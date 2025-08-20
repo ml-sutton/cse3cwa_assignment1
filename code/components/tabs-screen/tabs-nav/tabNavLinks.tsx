@@ -11,10 +11,9 @@ interface TabNavLinksPropTypes {
 export const TabNavLink: React.FC<TabNavLinksPropTypes> = ({ tabName, tabID, selectedTab, setSelectedTab }) => {
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault;
+    event.preventDefault();
     if (selectedTab !== tabID) {
       setSelectedTab(() => tabID)
-      console.log;
       WriteSelectedTabToCookie(tabID).then((isSuccess) => isSuccess ? console.log("wrote to cookies successfully") : console.warn("Failed to write to cookies"))
     }
   }

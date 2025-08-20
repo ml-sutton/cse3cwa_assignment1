@@ -8,7 +8,6 @@ import { TabsOutput } from "../tabs-output/tabsOutput";
 import { TabsContext } from "../../../utils/tabs/context/tabContext";
 import { Tab } from "../../../utils/tabs/models/tab";
 import WriteTabsToLocalStorage from "../../../utils/tabs/data-access/WriteTabsToLocalStorage";
-import WriteSelectedTabToCookie from "../../../utils/tabs/data-access/WriteSelectedTabToCookie";
 
 
 export const TabsLayout: React.FC = () => {
@@ -26,18 +25,21 @@ export const TabsLayout: React.FC = () => {
     setTabs([...tabContext?.tabs as Tab[]])
     setSelectedTab(tabContext?.loadedTab as number)
     setTabCount(tabContext?.tabCount as number);
-  }, [tabContext?.tabs, tabContext?.loadedTab])
+  }, [tabContext?.tabs, tabContext?.loadedTab, tabContext?.tabCount])
   useEffect(() => {
     if (tabContext?.loadedData === false || !tabContext?.loadedData) {
       return
     }
     if (tabs.length === 0) return
     WriteTabsToLocalStorage(tabs).then(result => {
-      result ? console.log("tabs saved") : console.warn("error in tab saving, No tabs or window is undefined");
+      if (result)
+        console.log("tabs saved")
+      else
+        console.warn("error in tab saving, No tabs or window is undefined");
       setTabCount(tabs.length);
       setLoadedData(true)
     }).catch(error => console.error(error));
-  }, [tabs]);
+  }, [tabs, tabContext?.loadedData]);
 
   return (
     <section>

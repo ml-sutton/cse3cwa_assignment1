@@ -1,8 +1,6 @@
-import { TabsContext } from "../../../utils/tabs/context/tabContext"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Tab } from "../../../utils/tabs/models/tab"
 import GetTabByID from "../../../utils/tabs/data-access/GetTabByID"
-import CreateNewTab from "../../../utils/tabs/data-access/CreateNewTab"
 interface TabsFormPropTypes {
   tabs: Tab[]
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
@@ -26,6 +24,7 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       setTabName("No Tab Selected");
       setTabData("No Tab Selected or no tabs exists");
     })
+    // eslint-disable-next-line
   }, [selectedTab])
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (tabName === "No Tab Selected") return;
@@ -73,14 +72,14 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       setTabName(tabs[0].tabName)
       setTabData(tabs[0].tabBody)
     }
-
+    // eslint-disable-next-line
   }, [loadedData])
   return tabs.length == 0 ? (
     <div className="min-w-1/2 h-full flex justify-center items-center flex-col">
-      <h1>You haven't created any tabs yet!</h1>
+      <h1>You haven&#39;t created any tabs yet!</h1>
       <p>Press the + button on the lefthand side of the screen to create some tabs!</p>
     </div>
-  ) : 
+  ) :
     (<div className="min-w-1/2 h-full">
       <form onSubmit={preventEnter}>
         <label htmlFor="tab-input">Tab Name : </label>

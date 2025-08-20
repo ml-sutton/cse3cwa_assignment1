@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TabsNavTitleBar } from "./tabsNavTitleBar";
 import { ThemeContext } from "../../../utils/theme/context/themeContext";
 import { TabsNavSubHeader } from "./tabsNavSubheader";
@@ -27,7 +27,7 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
       console.warn(error)
       setSelectedTabName("No Tab Selected");
     })
-  }, [selectedTab])
+  }, [selectedTab, tabs])
 
   return (
     <div className={`min-w-1/4 ${themedStyles} border-x-2`}>
