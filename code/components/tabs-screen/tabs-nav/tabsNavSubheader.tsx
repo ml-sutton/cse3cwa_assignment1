@@ -24,9 +24,10 @@ export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, se
     const didDelete = DeleteTabFromLocalStorage(tabs, tabToDelete);
     didDelete.then(tabsValue => {
       setTabs(tabsValue)
-      setSelectedTab(tabToDelete+1);
+      setSelectedTab(tabToDelete + 1);
     }).catch(error => {
       console.error(error)
+      if (tabs.length !=)
     })
   }
   return (

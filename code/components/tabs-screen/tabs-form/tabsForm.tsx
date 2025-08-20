@@ -23,6 +23,8 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       setTabData(tabValue.tabBody)
     }).catch(error => {
       console.warn(error)
+      setTabName("No Tab Selected");
+      setTabData("No Tab Selected or no tabs exists");
     })
   }, [selectedTab])
   const handleTabName = (event: React.ChangeEvent<HTMLInputElement>) => {

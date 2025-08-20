@@ -16,8 +16,7 @@ interface TabsNavPropTypes {
 }
 export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab, tabCount }) => {
   const themeContext = useContext(ThemeContext);
-  const dbSelectedTabName: string = (tabs[selectedTab] || (tabs.length !== 0)) ? tabs[selectedTab - 2]?.tabName : "No Tab Selected";
-  const [selectedTabName, setSelectedTabName] = useState<string>(dbSelectedTabName);
+  const [selectedTabName, setSelectedTabName] = useState<string>("No Tab Selected");
   const themedStyles: string = themeContext?.theme === "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
   useEffect(() => {
     GetTabByID(tabs, selectedTab).then(tabValue => {
@@ -26,6 +25,7 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
       console.log(selectedTab, newTabName)
     }).catch(error => {
       console.warn(error)
+      setSelectedTabName("No Tab Selected");
     })
   }, [selectedTab])
 
