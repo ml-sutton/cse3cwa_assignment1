@@ -26,8 +26,11 @@ export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, se
       setTabs(tabsValue)
       setSelectedTab(tabToDelete + 1);
     }).catch(error => {
-      console.error(error)
-      if (tabs.length !=)
+      console.warn(error)
+      if (tabs.length == 0) {
+        setSelectedTab(0);
+        console.log(tabCount)
+      }
     })
   }
   return (

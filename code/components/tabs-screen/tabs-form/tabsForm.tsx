@@ -80,7 +80,7 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       <h1>You haven't created any tabs yet!</h1>
       <p>Press the + button on the lefthand side of the screen to create some tabs!</p>
     </div>
-  ) :
+  ) : 
     (<div className="min-w-1/2 h-full">
       <form onSubmit={preventEnter}>
         <label htmlFor="tab-input">Tab Name : </label>
