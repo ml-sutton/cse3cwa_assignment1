@@ -76,8 +76,8 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       setTabName(tabs[0].tabName)
       setTabData(tabs[0].tabBody)
     }
-    // eslint-disable-next-line
-  }, [loadedData])
+
+  }, [loadedData, tabs])
 
 
   return tabs.length == 0 ? (
