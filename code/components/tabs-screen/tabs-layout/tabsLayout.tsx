@@ -12,7 +12,7 @@ import WriteTabsToLocalStorage from "../../../utils/tabs/data-access/WriteTabsTo
 
 export const TabsLayout: React.FC = () => {
   const themeContext = useContext(ThemeContext);
-  const themedStyles = themeContext?.theme == "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
+  const themedStyles = themeContext?.theme == "light" ? "bg-gradient-to-r from-slate-300 to-slate-500 text-[#111]" : "bg-gradient-to-r from-slate-900 to-slate-700 text-[#fefefe]"
   const tabContext = useContext(TabsContext);
   const tabsValue = tabContext?.tabs ? [...tabContext.tabs] : []
   const selectedTabvalue = tabContext?.loadedTab ? tabContext.loadedTab : 0

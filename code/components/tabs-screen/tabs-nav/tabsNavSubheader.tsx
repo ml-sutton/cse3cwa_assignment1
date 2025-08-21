@@ -35,10 +35,14 @@ export const TabsNavSubHeader: React.FC<TabsNavSubHeaderPropTypes> = ({ tabs, se
   }
   return (
 
-    <div className="flex w-full justify-end gap-4 pl-4 px-2 border-t-2 border-b-2">
-      <p className="mr-auto">{tabCount}/15</p>
-      <button onClick={() => createTab()}>+</button>
-      <button onClick={() => deleteTab()}>-</button>
+    <div className="flex w-full justify-end pl-4 border-t-2 border-b-2">
+      <div className="flex justify-center items-center mr-auto">
+        <p className="">{tabCount}/15</p>
+      </div>
+      <div className="">
+        <button className="p-2 px-4 text-xl border-l-2 cursor-pointer hover:bg-emerald-400" onClick={() => createTab()}>+</button>
+        <button className="p-2 px-4 text-xl border-l-2 cursor-pointer hover:bg-red-400" onClick={() => deleteTab()}>-</button>
+      </div>
     </div>
   )
 }

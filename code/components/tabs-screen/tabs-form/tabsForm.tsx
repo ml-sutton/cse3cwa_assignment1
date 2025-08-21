@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Tab } from "../../../utils/tabs/models/tab"
 import GetTabByID from "../../../utils/tabs/data-access/GetTabByID"
+import { ThemeContext } from "../../../utils/theme/context/themeContext"
 interface TabsFormPropTypes {
   tabs: Tab[]
   setTabs: React.Dispatch<React.SetStateAction<Tab[]>>
@@ -10,6 +11,9 @@ interface TabsFormPropTypes {
 }
 
 export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab, tabCount, loadedData }) => {
+  const themeContext = useContext(ThemeContext);
+  const themedStyles: string = themeContext?.theme === "light" ? "bg-slate-100 text-[#111]" : "lg:bg-slate-800 text-[#fefefe]"
+
   const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "No Tab Selected";
   const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "No Tab Selected or no tabs exists"
   const [tabName, setTabName] = useState<string>(dbTabName);
@@ -74,18 +78,24 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
     }
     // eslint-disable-next-line
   }, [loadedData])
+
+
   return tabs.length == 0 ? (
-    <div className="min-w-1/2 h-full flex justify-center items-center flex-col">
+    <div className={`min-w-1/2 h-full flex justify-center items-center flex-col`}>
       <h1>You haven&#39;t created any tabs yet!</h1>
       <p>Press the + button on the lefthand side of the screen to create some tabs!</p>
     </div>
   ) :
-    (<div className="min-w-1/2 h-full">
+    (<div className={`min-w-2/3 lg:min-w-1/2 h-full  py-4 lg:p-4`}>
       <form onSubmit={preventEnter}>
-        <label htmlFor="tab-input">Tab Name : </label>
-        <input type="text" id="tab-input" value={tabName} onChange={handleTabName} />
-        <hr />
-        <textarea name="" className="py-4 px-4 min-w-full h-full" value={tabData} onChange={handleTabData}></textarea>
+        <div className={`border-2 rounded-t-xl lg:border-0 lg:py-4 flex justify-between py-2 lg:justify-start `}>
+          <label htmlFor="tab-name-input" className={`lg:text-xl lg:border-2 border-r-0 px-4 lg:px-8 lg:py-[11px] rounded-l-lg ${themedStyles}`}>Tab Name : </label>
+          <input className={`lg:text-xl lg:border-2 border-l-0 lg:px-8 lg:py-2 rounded-tr-xl lg:rounded-r-lg active:border-blue-800 hover:border-blue-500 ${themedStyles}`} type="text" id="tab-name-input" value={tabName} onChange={handleTabName} />
+        </div>
+        <div className="lg:border-t-2 lg:pt-4">
+
+          <textarea rows={60} name="tab-data-input" className={`text-shadow-md py-4 text-lg lg:text-xl lg:rounded-t-xl rounded-b-xl border-2 border-t-0 lg:border-t-2  hover:border-blue-500 active:border-blue-800 border-gray-300 px-4 min-w-full h-full lg:resize-none ${themedStyles}`} value={tabData} onChange={handleTabData}></textarea>
+        </div>
       </form>
     </div>)
 
