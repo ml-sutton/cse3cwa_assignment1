@@ -43,7 +43,7 @@ export const TabsLayout: React.FC = () => {
 
   return (
     <section>
-      <div className={`flex px-8 py-8 min-h-[100vh] ${themedStyles}`}>
+      <div className={`flex flex-col lg:flex-row px-8 py-8 min-h-[100vh] ${themedStyles}`}>
         <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabCount={tabCount} />
         <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} tabCount={tabCount} loadedData={loadedData} />
         <TabsOutput tabs={tabs} />

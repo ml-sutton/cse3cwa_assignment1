@@ -2,6 +2,7 @@
 import { ThemeContext } from "../../../../utils/theme/context/themeContext";
 import { useContext, useState } from "react";
 
+
 export const ThemeSwitcher: React.FC = () => {
   const theme = useContext(ThemeContext);
   const [isDark, setIsDark] = useState<boolean>(theme?.theme == "dark" ? true : false)

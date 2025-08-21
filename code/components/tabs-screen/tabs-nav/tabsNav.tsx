@@ -17,7 +17,7 @@ interface TabsNavPropTypes {
 export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab, setSelectedTab, tabCount }) => {
   const themeContext = useContext(ThemeContext);
   const [selectedTabName, setSelectedTabName] = useState<string>("No Tab Selected");
-  const themedStyles: string = themeContext?.theme === "light" ? "bg-[#fefefe] text-[#111]" : "bg-[#333333] text-[#fefefe]"
+  const themedStyles: string = themeContext?.theme === "light" ? "bg-gradient-to-r from-slate-100 via-gray-100 to-stone-300 text-[#111]" : "bg-gradient-to-t from-slate-600 via-zinc-500 to-stone-600 text-[#fefefe]"
   useEffect(() => {
     GetTabByID(tabs, selectedTab).then(tabValue => {
       const newTabName = tabValue.tabName;
@@ -30,10 +30,12 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
   }, [selectedTab, tabs])
 
   return (
-    <div className={`min-w-1/4 ${themedStyles} border-x-2`}>
+    <div className={`min-w-1/4 ${themedStyles} border-2 lg: lg:rounded-l-4xl `}>
       <TabsNavTitleBar tabName={selectedTabName} />
-      <TabsNavSubHeader tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} tabCount={tabCount} setSelectedTab={setSelectedTab} />
-      <nav>
+      <div className="hidden lg:block">
+        <TabsNavSubHeader tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} tabCount={tabCount} setSelectedTab={setSelectedTab} />
+      </div>
+      <nav className="hidden lg:block">
         {(!tabs || tabs.length == 0) ? (
           <div className="">
             You have not created any tabs yet!
@@ -44,6 +46,7 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
           })}
         </ul>}
       </nav>
+      <nav className="block lg:hidden"></nav>
     </div>
   )
 }

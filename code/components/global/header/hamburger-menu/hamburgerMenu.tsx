@@ -1,5 +1,6 @@
 "use client"
 import { PageLinks } from "../../../../const/pagelinks"
+import { ThemeSwitcherHamburger } from "../theme-switcher/themeSwitcherHamburger"
 import { HamburgerLink } from "./hamburgerLink"
 
 interface HamburgerMenuPropTypes {
@@ -13,6 +14,9 @@ export const HamburgerMenu: React.FC<HamburgerMenuPropTypes> = ({ isOpen }) => {
           {PageLinks.map((item, key) => (<li key={key}>
             <HamburgerLink href={item.href} name={item.name} />
           </li>))}
+          <li className="lg:hidden">
+            <ThemeSwitcherHamburger />
+          </li>
         </ul>
       </div>
     </div>

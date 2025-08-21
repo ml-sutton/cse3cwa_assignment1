@@ -76,17 +76,14 @@ body {
   background-color: var(--foreground);
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  /* No absolute/relative positioning here */
 }
 
-/* Spacing bars evenly */
 .bar-top,
 .bar-mid,
 .bar-bottom {
   width: 100%;
 }
 
-/* Checkbox hidden, so let's target based on checked state */
 input[type="checkbox"]:checked+label .bar-top {
   transform: translateY(12.5px) rotate(45deg);
 }
@@ -119,7 +116,6 @@ input[type="checkbox"]:checked+label .bar-bottom {
 
 .checkbox-label {
   font-size: 1rem;
-  /* 👈 change this to scale */
   border: .125em solid currentColor;
   border-radius: 2em;
   cursor: pointer;
@@ -176,4 +172,59 @@ input:checked~.checkbox-label span {
 }
 
 
+.nav--checkbox-label {
+  font-size: 1rem;
+  border: .125em solid currentColor;
+  border-radius: 2em;
+  cursor: pointer;
+  display: block;
+  height: 2em;
+  position: relative;
+  width: 3.75em;
+}
 
+.nav--checkbox-label span {
+  background-color: currentColor;
+  border-radius: 2em;
+  display: block;
+  height: 1.5em;
+  left: .25em;
+  overflow: hidden;
+  position: absolute;
+  top: .15em;
+  text-indent: -9999px;
+  transition: left .25s;
+  width: 1.5em;
+  z-index: 2;
+}
+
+.nav--checkbox-label::before,
+.nav--checkbox-label::after {
+  content: '';
+  display: block;
+  border-radius: 1em;
+  position: absolute;
+  z-index: 1;
+}
+
+.nav--checkbox-label::after {
+  box-shadow: .25em .25em #5901d8;
+  height: 1.125em;
+  right: .9em;
+  top: .125em;
+  width: 1.125em;
+}
+
+.nav--checkbox-label::before {
+  background-color: #ffc409;
+  height: .625em;
+  outline: .25em dotted #ffc409;
+  outline-offset: .125em;
+  left: .7em;
+  top: .7em;
+  width: .625em;
+}
+
+input:checked~.nav--checkbox-label span {
+  left: 1.8em;
+}
