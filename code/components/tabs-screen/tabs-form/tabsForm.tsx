@@ -72,9 +72,10 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       setTabName("No Tab Selected");
       setTabData("No Tab Selected or no tabs exists");
       return
-    } else {
+    } else if (tabCount === 1) {
       setTabName(tabs[0].tabName)
       setTabData(tabs[0].tabBody)
+      return
     }
 
   }, [loadedData, tabs])
