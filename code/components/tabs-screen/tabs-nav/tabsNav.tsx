@@ -38,8 +38,8 @@ export const TabsNav: React.FC<TabsNavPropTypes> = ({ tabs, setTabs, selectedTab
       </div>
       <nav className="hidden lg:block">
         {(!tabs || tabs.length == 0) ? (
-          <div className="">
-            You have not created any tabs yet!
+          <div className="px-4 py-4 text-xl">
+            You have not created any tabs yet! Please press the + button to create a tab and start exporting!
           </div>
         ) : <ul>
           {tabs.map((tab, key) => {

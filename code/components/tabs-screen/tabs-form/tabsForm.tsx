@@ -73,9 +73,9 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       setTabData("No Tab Selected or no tabs exists");
       return
     } else if (tabCount === 1) {
+      // For some reason this is the only way to get it to work I do not know why I have spent so long on this
       setTabName(tabs[0] ? tabs[0].tabName : `${tabCount}`)
       setTabData(tabs[0] ? tabs[0].tabBody : `${tabCount}`)
-      console.log(tabCount);
       return
     }
 
@@ -83,9 +83,18 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
 
 
   return tabs.length == 0 ? (
-    <div className={`min-w-1/2 h-full flex justify-center items-center flex-col`}>
-      <h1>You haven&#39;t created any tabs yet!</h1>
-      <p>Press the + button on the lefthand side of the screen to create some tabs!</p>
+    <div className={`min-w-1/2 h-full flex justify-center items-center px-4`}>
+      <div className={`${themedStyles} border-2 rounded-xl w-full px-8 py-4 flex justify-center items-center flex-col`}>
+        <h1 className="text-2xl">You haven&#39;t created any tabs yet!</h1>
+        <p className="text-xl">Press the + button on the lefthand side of the screen to create some tabs!</p>
+      </div>
+    </div>
+  ) : tabName === "No Tab Selected" ? (
+    <div className="min-w-1/2 h-full flex justify-center items-center px-4">
+      <div className={`${themedStyles} border-2 rounded-xl w-full px-8 py-4 flex justify-center items-center flex-col`}>
+        <h1 className="text-2xl">No tab selected!</h1>
+        <p className="text-xl">please select a tab from the sidebar</p>
+      </div>
     </div>
   ) :
     (<div className={`min-w-2/3 lg:min-w-1/2 h-full  py-4 lg:p-4`}>
@@ -96,7 +105,7 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
         </div>
         <div className="lg:border-t-2 lg:pt-4">
 
-          <textarea rows={60} name="tab-data-input" className={`text-shadow-md py-4 text-lg lg:text-xl lg:rounded-t-xl rounded-b-xl border-2 border-t-0 lg:border-t-2  hover:border-blue-500 active:border-blue-800 border-gray-300 px-4 min-w-full h-full lg:resize-none ${themedStyles}`} value={tabData} onChange={handleTabData}></textarea>
+          <textarea rows={25} name="tab-data-input" className={`text-shadow-md py-4 text-lg lg:text-xl lg:rounded-t-xl rounded-b-xl border-2 border-t-0 lg:border-t-2  hover:border-blue-500 active:border-blue-800 border-gray-300 px-4 min-w-full h-full lg:resize-none ${themedStyles}`} value={tabData} onChange={handleTabData}></textarea>
         </div>
       </form>
     </div>)
