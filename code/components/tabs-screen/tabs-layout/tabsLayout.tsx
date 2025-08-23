@@ -30,12 +30,16 @@ export const TabsLayout: React.FC = () => {
     if (tabContext?.loadedData === false || !tabContext?.loadedData) {
       return
     }
-    if (tabs.length === 0) return
+    if (tabs.length === 0) {
+      setTabCount(tabs.length);
+      return;
+    }
     WriteTabsToLocalStorage(tabs).then(result => {
       if (result)
         console.log("tabs saved")
       else
         console.warn("error in tab saving, No tabs or window is undefined");
+      console.log(` OLD TAB COUNT = ${tabCount}, NEW TAB COUNT = ${tabs.length} ${tabs}`)
       setTabCount(tabs.length);
       setLoadedData(true)
     }).catch(error => console.error(error));
@@ -43,7 +47,7 @@ export const TabsLayout: React.FC = () => {
 
   return (
     <section>
-      <div className={`flex flex-col lg:flex-row px-8 py-8 min-h-[100vh] ${themedStyles}`}>
+      <div className={`flex flex-col lg:flex-row px-8 py-8 min-h-[85vh] overflow-x-clip max-h-[90vh] ${themedStyles}`}>
         <TabsNav tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} setSelectedTab={setSelectedTab} tabCount={tabCount} />
         <TabsForm tabs={tabs} setTabs={setTabs} selectedTab={selectedTab} tabCount={tabCount} loadedData={loadedData} />
         <TabsOutput tabs={tabs} />

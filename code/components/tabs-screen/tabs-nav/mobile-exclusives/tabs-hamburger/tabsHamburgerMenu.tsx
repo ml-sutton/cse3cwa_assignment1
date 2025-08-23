@@ -17,7 +17,7 @@ export const TabsHamburgerMenu: React.FC<TabsHamburgerMenuPropTypes> = ({ tabs, 
       </div>
       <div className="">
         <nav>
-          {tabs.map((tab, key) => (<li key={key}><TabsHamburgerLink tabName={tab.tabName} tabID={tab.tabId} selectedTab={selectedTab} setSelectedTab={setSelectedTab} /></li>))}
+          <ul>{tabs.map((tab, key) => (<li key={key}><TabsHamburgerLink tabName={tab.tabName} tabID={tab.tabId} selectedTab={selectedTab} setSelectedTab={setSelectedTab} /></li>))}</ul>
         </nav>
       </div>
     </div>
