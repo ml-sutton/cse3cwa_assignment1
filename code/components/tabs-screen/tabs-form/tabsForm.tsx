@@ -13,7 +13,7 @@ interface TabsFormPropTypes {
 export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedTab, tabCount, loadedData }) => {
   const themeContext = useContext(ThemeContext);
   const themedStyles: string = themeContext?.theme === "light" ? "bg-slate-100 text-[#111]" : "lg:bg-slate-800 text-[#fefefe]"
-
+  const [tabCreated, setTabCreated] = useState<boolean>(false);
   const dbTabName = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabName : "No Tab Selected";
   const dbTabBody = tabs[selectedTab] !== undefined ? tabs[selectedTab].tabBody : "No Tab Selected or no tabs exists"
   const [tabName, setTabName] = useState<string>(dbTabName);
@@ -74,8 +74,10 @@ export const TabsForm: React.FC<TabsFormPropTypes> = ({ tabs, setTabs, selectedT
       return
     } else if (tabCount === 1) {
       // For some reason this is the only way to get it to work I do not know why I have spent so long on this
+      if (tabCreated) return;
       setTabName(tabs[0] ? tabs[0].tabName : `${tabCount}`)
       setTabData(tabs[0] ? tabs[0].tabBody : `${tabCount}`)
+      setTabCreated(true);
       return
     }
 
