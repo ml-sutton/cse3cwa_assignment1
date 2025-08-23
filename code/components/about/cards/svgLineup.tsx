@@ -4,8 +4,9 @@ import { NextSvgComponent } from "./svg-components/nextSVGComponent"
 import { ReactSvgComponent } from "./svg-components/reactSVGComponent"
 import { TailwindSvgComponent } from "./svg-components/tailwindSVGComponent"
 import { TypescriptSvgComponent } from "./svg-components/typescriptSVGComponent"
+import React from "react"
 
-export const SVGLineup = () => {
+export const SVGLineup = React.memo(() => {
   return (
     <div className="">
       <h1 className="text-xl text-center text-[#fefefe] text-shadow-black text-shadow-md">Built with novel technologies such as : </h1>
@@ -39,4 +40,4 @@ export const SVGLineup = () => {
       </div>
     </div>)
 
-}
+})

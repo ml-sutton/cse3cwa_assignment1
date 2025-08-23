@@ -1,6 +1,7 @@
-import TitleCardIcon from "./titlecardIcon"
+import React from "react"
+import { TitleCardIcon } from "./titlecardIcon"
 
-export const TitleCard: React.FC = () => {
+export const TitleCard: React.FC = React.memo(() => {
   return (
     <div className="lg:mr-auto flex ">
       <div className="pt-2">
@@ -12,4 +13,4 @@ export const TitleCard: React.FC = () => {
       </div>
     </div>
   )
-}
+})

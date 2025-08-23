@@ -1,5 +1,5 @@
-import { SVGProps } from "react"
-export const NextSvgComponent = (props: SVGProps<SVGSVGElement>) => (
+import React, { SVGProps } from "react"
+export const NextSvgComponent = React.memo((props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={50}
@@ -15,5 +15,5 @@ export const NextSvgComponent = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-)
+))
 
