@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# La Tabs
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## using la tabs 
+### building
+to use la tabs you go into the directory with the package.json and run the following commands to run it in a development server.
 ```
+npm i
+npm run dev
+```
+### Creating tabs 
+to create a tab you press the plus button on the sidebar and that creates a blank tab. To select it click on the link in the tabs sidebar
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Writing to tabs 
+After selecting a tab it will show the data currently stored within the tab on the screen. Write data into the input fields and it will store the data within the cookies and local storage.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Compiling tabs 
+press the compile button to turn your tabs into html and javascript to be used in your own webpages! Click the copy to clip board button to copy all the data to the clip board.

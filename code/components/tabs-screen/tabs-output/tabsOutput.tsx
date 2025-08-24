@@ -28,7 +28,7 @@ export const TabsOutput: React.FC<TabsOutputPropTypes> = ({ tabs }) => {
         <button className={`border-2 px-14 rounded-tr-xl py-4 cursor-pointer hover:bg-green-500 active:border-blue-500 disabled:hover:bg-red-500 disabled:hover:text-red-950 disabled:active:border-red-500 ${themedButtonStyles}`} onClick={() => copyDataToClipboard()} disabled={outputData === ""}> Copy to clipboard</button>
       </div>
       <hr />
-      <code className="p-4">
+      <code className="p-4 overflow-y-scroll">
         {outputData === "" ? "compile some tabs to see some output" : outputData}
       </code>
     </div>

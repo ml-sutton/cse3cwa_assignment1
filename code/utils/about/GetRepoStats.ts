@@ -3,7 +3,8 @@ export interface RepoStatistics {
   branches: number
   pullRequests: number
 }
-
+// START
+// THIS IS POTENTIALLY AI GENERATED
 export async function GetRepoStats(): Promise<RepoStatistics> {
   const owner: string = "ml-sutton";
   const repo: string = "cse3cwa_assignment1";
@@ -31,3 +32,4 @@ export async function GetRepoStats(): Promise<RepoStatistics> {
     pullRequests: pullsCount,
   }
 }
+// END
